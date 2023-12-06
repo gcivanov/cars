@@ -1,0 +1,59 @@
+{
+  "ADDRESS_CONTACT": "2903 Avenue Z, Brooklyn, NY, BULGARIA",
+  "EMAIL_CONTACT": "test@test@email",
+  "LOGIN": "Вход", 
+  "LOGOUT": "Изход", 
+  "REGISTER": "Регистрация",
+  "ACCOUNT": "Потребител",
+  "SUBMIT_PROPERTY": "Добави имот",
+  "MENU": "Меню",
+  "MY_PROPERTIES": "Моите имоти",
+  "FAVORITES": "Любими",
+  "COMPARE": "Сравни",
+  "EDIT_PROFILE": "Редактирай профил",
+  "LOCK_SCREEN": "Заключи екран",
+  "HELP": "Помощ",
+  "NAV": {  
+    "HOME": "Начална страница", 
+    "PROPERTIES": "Имоти", 
+    "PAGES": "Страници", 
+    "AGENTS": "Агенции",
+    "AGENT": "Агенция", 
+    "FAQS": "Faqs",
+    "PRICING": "Ценови пакети",
+    "TERMS_CONDITIONS": "Условия за ползване",
+    "LANDING": "Landing", 
+    "404_PAGE": "404 Page",
+    "OTHERS": "Others",
+    "EXTERNAL_LINK": "External Link",
+    "MENU_ITEM": "Menu Item",
+    "CONTACT": "Contact",
+    "ABOUT_US": "За нас",
+    "ADMIN": "Admin"
+  }, 
+  "BTN": {
+    "ADD": "Добави",
+    "SAVE": "Запази",
+    "SUBMIT": "Изпращане",
+    "CANCEL": "Отмяна",
+    "UPLOAD": "Upload",
+    "REMOVE": "Качване",
+    "YES": "Да",
+    "NO": "Не",
+    "OK": "Добре",
+    "CLEAR": "Изчисти",
+    "ADVANCED_SEARCH": "Покажи филтри",
+    "SEARCH": "Търсене",
+    "HIDE": "Скрий"
+  },
+  "MESSAGE": {
+    "SURE_DELETE": "Сигурен ли си, че искаш да го изтриеш?",
+    "FILE_SIZE": "Файла не трябва да надвишава {{param}} kb."
+  },
+  "FIELD": { 
+    "NAME": "Име" 
+  },
+  "LOAD_MORE": "Покажи още",
+  "RESULTS": "Резултата",
+  "FOUND": "Намерени"
+}

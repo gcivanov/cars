@@ -1,0 +1,1 @@
+1. We can extract email to separate micro service + Confirmation Token
