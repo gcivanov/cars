@@ -1,0 +1,32 @@
+<div class="theme-container" fxLayout="row wrap" >
+  <mat-card fxFlex="100" fxFlex.gt-xs="24" class="m-1" >
+    <mat-calendar [headerComponent]="exampleHeader"
+     [selected]="selectedDateRange" [startAt]="selectedDateRange.start"
+     (selectedChange)="logMonth($event)">
+    </mat-calendar>
+  </mat-card>
+  <mat-card fxFlex="100" fxFlex.gt-xs="54" class="m-1" (click)="$event.stopPropagation()">
+    <mat-calendar #calendar [headerComponent]="exampleHeader"
+    (selectedChange)="select($event,calendar)" [dateClass]="isSelected">
+    </mat-calendar>
+  </mat-card>
+#1
+
+  <ng-container *ngFor="let currentMonthDate of allRemainingMOnths; let i = index;">
+    <div *ngIf="currentMonthDate.getMonth() === 0 || i === 0" fxFlex="100" fxFlex.gt-xs="100" class="m-1">
+      <h4 class="text-center">{{currentMonthDate.getFullYear()}}</h4>
+    </div>
+    <mat-card fxFlex="100" fxFlex.gt-xs="24" class="m-1" >
+      <mat-calendar #calendar
+      [startAt]="currentMonthDate"
+      [headerComponent]="exampleHeader"
+      [dateClass]="isSelectedDate">
+      </mat-calendar>
+    </mat-card>
+  </ng-container>
+
+
+  <div (click)="$event.stopPropagation()">
+		<mat-calendar #calendar (selectedChange)="select($event,calendar)" [dateClass]="isSelected"></mat-calendar>
+	</div>
+</div>

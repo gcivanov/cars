@@ -1,0 +1,573 @@
+<div class="p-3">
+    <div *ngIf="!!submitForm" class="theme-container">
+
+      <mat-card ngClass.lt-lg="p-0" [formGroup]="submitForm">
+
+        <mat-horizontal-stepper #horizontalStepper linear="true" class="submit-property" (selectionChange)="onSelectionChange($event)">
+
+
+          <mat-step [stepControl]="submitForm.get('basic')!" label="{{'CREATE_EVENT.INFO_PAGE' | translate}}">
+            <div class="step-content">
+
+                <form formGroupName="basic" fxLayout="row wrap">
+
+                    <div fxFlex="100" class="p-3">
+                      <h1 class="fw-500 text-center">{{'CREATE_EVENT.INFO_PAGE' | translate}}</h1>
+                    </div>
+
+                    <div fxFlex="100" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>{{'CREATE_EVENT.NAME' | translate}}</mat-label>
+                          <input matInput placeholder="{{'CREATE_EVENT.NAME' | translate}}" formControlName="name" required autocomplete="off">
+                          <mat-error *ngIf="submitForm.controls['basic'].get('name')?.errors">{{'ERROR.NAME_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>{{'CREATE_EVENT.DESCRIPTION' | translate}}</mat-label>
+                          <textarea matInput placeholder="{{'CREATE_EVENT.DESCRIPTION' | translate}}" formControlName="description" rows="5"></textarea>
+                          <mat-error *ngIf="submitForm.controls['basic'].get('description')?.errors">{{'ERROR.DESCRIPTION_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field  appearance="outline" class="w-100">
+                        <mat-icon matPrefix class="mr-1 text-muted">person_outline</mat-icon>
+                        <mat-label>{{'CREATE_EVENT.TYPE_EVENT' | translate}}</mat-label>
+                        <!-- [compareWith]="comparePositionObjects" -->
+                        <mat-select placeholder="{{'CREATE_EVENT.TYPE_EVENT' | translate}}" formControlName="type" >
+                            <mat-option *ngFor="let eventType of eventTypes" [value]="eventType" [id]="eventType">
+                                {{'EVENT_TYPES.'+ eventType | translate}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="submitForm.controls['basic'].get('type')?.errors">{{'ERROR.TYPE_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field  appearance="outline" class="w-100">
+                        <mat-icon matPrefix class="mr-1 text-muted">person_outline</mat-icon>
+                        <mat-label>{{'CREATE_EVENT.CATEGORY' | translate}}</mat-label>
+                        <!-- [compareWith]="comparePositionObjects" -->
+                        <mat-select placeholder="{{'CREATE_EVENT.CATEGORY' | translate}}" formControlName="category" >
+                            <mat-option *ngFor="let eventCategory of eventCategories" [value]="eventCategory" [id]="eventCategory.name">
+                              {{'EVENT_CATEGORIES.' + eventCategory.name | translate: {Default: eventCategory.name} }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="submitForm.controls['basic'].get('category')?.errors">{{'ERROR.TYPE_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>{{'EMPLOYEE.ADDITIONAL_INFO' | translate}}</mat-label>
+                          <textarea matInput placeholder="{{'EMPLOYEE.ADDITIONAL_INFO' | translate}}" formControlName="additionalInformation" rows="5"></textarea>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="18" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label class="sm-text">{{'CREATE_EVENT.MAX_PARTICIPANTS' | translate}}</mat-label>
+                        <input matInput type="number" min="1" placeholder="{{'CREATE_EVENT.PARTICIPANTS' | translate}}" formControlName="maxParticipants" autocomplete="off">
+                        <mat-error *ngIf="submitForm.controls['basic'].get('maxParticipants')?.errors">{{'ERROR.MAX_PARTICIPANTS_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="28" class="px-2 m-auto">
+                      <div appearance="outline" class="w-100 text-center">
+                        <mat-label>Ако липсва категорията, която ви е необходиме, моля изберете други и направете заявка.</mat-label>
+                      </div>
+                      <div appearance="outline" class="w-100 mt-1" fxLayout="row" fxLayoutAlign="center center">
+                        <button mat-raised-button type="button" fxLayout="row" fxLayoutAlign="center center" (click)="openAddCategoryDialog()">
+                          {{'CREATE_EVENT.ADD_CATEGORY' | translate}}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE_EVENT.START_TIME' | translate}}</mat-label>
+                        <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                        <input matInput [ngxMatDatetimePicker]="pickerStartTime" placeholder="{{'CREATE_EVENT.START_TIME' | translate}}"
+                                formControlName="startTime">
+                                <!-- (dateChange)="dateUpdated()" > -->
+                        <mat-hint>MM/DD/YYYY HH:mm</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="$any(pickerStartTime)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #pickerStartTime
+                                                [showSpinners]="true" [showSeconds]="false"
+                                                [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                                [touchUi]="false" [enableMeridian]="false"
+                                                [disableMinute]="false" [hideTime]="false">
+                        </ngx-mat-datetime-picker>
+                        <mat-error *ngIf="submitForm.controls['basic'].get('startTime')?.errors">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE_EVENT.END_TIME' | translate}}</mat-label>
+                        <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                        <input matInput [ngxMatDatetimePicker]="pickerEndTime" placeholder="{{'CREATE_EVENT.END_TIME' | translate}}"
+                                formControlName="endTime">
+                                <!-- (dateChange)="dateUpdated()" > -->
+                        <mat-hint>MM/DD/YYYY HH:mm</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="$any(pickerEndTime)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #pickerEndTime
+                                                [showSpinners]="true" [showSeconds]="false"
+                                                [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                                [touchUi]="false" [enableMeridian]="false"
+                                                [disableMinute]="false" [hideTime]="false">
+                        </ngx-mat-datetime-picker>
+                        <mat-error *ngIf="submitForm.controls['basic'].get('endTime')?.hasError('required')">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                        <mat-error *ngIf="submitForm.controls['basic'].get('endTime')?.hasError('dateBetween')">{{'ERROR.END_DATE' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div *ngIf="!!durationAsObj" fxFlex="100" fxFlex.gt-xs="100" class="px-2 mb-4">
+                      <mat-label>{{'DURATION.IS' | translate}}
+                         <span *ngIf="durationAsObj.months != 0">{{durationAsObj.months}} {{'DURATION.MONTHS' | translate}} </span>
+                         <span *ngIf="durationAsObj.weeks != 0">{{durationAsObj.weeks}} {{'DURATION.WEEKS' | translate}} </span>
+                         <span *ngIf="durationAsObj.days != 0">{{durationAsObj.days}} {{'DURATION.DAYS' | translate}} </span>
+                         <span>{{durationAsObj.hours}} {{'DURATION.HOURS' | translate}} </span>
+                         <span>{{durationAsObj.min}} {{'DURATION.MIN' | translate}}</span></mat-label>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="100" class="px-2 mb-4">
+
+                      <app-year-calendar></app-year-calendar>
+                    </div>
+
+                    <!-- REPEAT EVENET -->
+                    <form formGroupName="repeatable" fxLayout="row wrap" fxFlex="100" fxFlex.gt-xs="100" class="px-2 mb-2">
+                      <div fxFlex="100" fxLayout="column" fxFlex.gt-xs="50" class="mb-2">
+                        <mat-checkbox #repeatCheckbox formControlName="isRepeatable">{{'REPEATABLE_EVENT.TITLE' | translate}}</mat-checkbox>
+                        <mat-label class="text-center" *ngIf="repeatCheckbox.checked === true">{{'REPEATABLE_EVENT.NEXT_SAVED' | translate}}</mat-label>
+                      </div>
+                      <div *ngIf="repeatCheckbox.checked === true" fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-icon matPrefix class="mr-1 text-muted">person_outline</mat-icon>
+                          <mat-label>{{'CREATE_EVENT.TYPE' | translate}}</mat-label>
+                          <!-- [compareWith]="comparePositionObjects" -->
+                          <mat-select placeholder="{{'CREATE_EVENT.TYPE' | translate}}" formControlName="repeatInterval" >
+                              <mat-option *ngFor="let repeat of repeatIntervals" [value]="repeat" [id]="repeat">
+                                  {{'REPEATABLE_EVENT.'+ repeat | translate}}
+                              </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="submitForm.controls['basic'].get('type')?.errors">{{'ERROR.TYPE_REQUIRED' | translate}}</mat-error>
+                        </mat-form-field>
+                      </div>
+                      <ng-container *ngIf="repeatCheckbox.checked === true" formArrayName="result">
+                        <div *ngFor="let item of submitForm.controls['basic'].get('repeatable')?.get('result')?.value; let i = index;" fxFlex="100" class="step-section">
+                          <div fxFlex="4" class="fw-500 text-center pt-3">{{i+1}}.</div>
+                          <!-- <div [formGroupName]="i" fxFlex="90" fxLayout="row wrap">
+                              <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="40" class="px-2">
+                                  <mat-label>Name</mat-label>
+                                  <input matInput placeholder="Feature name" formControlName="name" autocomplete="off">
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="60" class="px-2">
+                                  <mat-label>Value</mat-label>
+                                  <input matInput placeholder="Feature value" formControlName="value" autocomplete="off">
+                              </mat-form-field>
+                          </div> -->
+                          <!-- <mat-card class="demo-inline-calendar-card"> -->
+                            <div fxFlex="100" fxFlex.gt-xs="100" class="px-2 mb-4">
+                            <app-year-calendar></app-year-calendar>
+                          </div>
+                          <!-- </mat-card> -->
+                          <!-- <div fxFlex="6" class="text-center pt-2">
+                              <button mat-icon-button color="warn" (click)="deleteFeature(i)" matTooltip="Delete Feature">
+                                  <mat-icon>cancel</mat-icon>
+                              </button>
+                          </div> -->
+                      </div>
+                      </ng-container>
+                    </form>
+
+
+                    <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="end center">
+                      <button mat-raised-button color="primary" matStepperNext fxLayout="row" fxLayoutAlign="center center" type="button">
+                        <span class="mx-1 uppercase">Next</span>
+                        <mat-icon>navigate_next</mat-icon>
+                      </button>
+                    </div>
+
+                </form>
+
+            </div>
+          </mat-step>
+
+
+
+
+          <mat-step [stepControl]="submitForm.get('prices')!" label="{{'CREATE_EVENT.PRICES_PAGE' | translate}}">
+            <div class="step-content" fxLayout="row wrap">
+
+              <div fxFlex="100" class="p-3">
+                <h1 class="fw-500 text-center">{{'CREATE_EVENT.PRICES_PAGE' | translate}}</h1>
+              </div>
+              <mat-checkbox fxFlex="100" fxFlex.gt-xs="100" class="px-2 mb-2" (change)="changePriceRange($event)">
+                {{'CREATE_EVENT.ADD_MORE_ONE_PRICE' | translate}}</mat-checkbox>
+              <ng-container formArrayName="prices">
+                <ng-container *ngFor="let priceForm of pricesFormArr.controls; let i = index">
+
+                  <form [formGroupName]="i" fxLayout="row wrap" fxFlex.gt-xs="100">
+
+                    <div *ngIf="isMultiPriceActive" fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE_EVENT.START_DATE' | translate}}</mat-label>
+                        <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                        <input matInput [ngxMatDatetimePicker]="pickerFromDate" placeholder="{{'CREATE_EVENT.START_DATE' | translate}}"
+                                formControlName="fromDate">
+                                <!-- (dateChange)="dateUpdated()" > -->
+                        <mat-hint>MM/DD/YYYY HH:mm</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="$any(pickerFromDate)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #pickerFromDate
+                                                [showSpinners]="true" [showSeconds]="false"
+                                                [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                                [touchUi]="false" [enableMeridian]="false"
+                                                [disableMinute]="false" [hideTime]="false">
+                        </ngx-mat-datetime-picker>
+                        <mat-error *ngIf="priceForm.get('fromDate')?.errors">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div *ngIf="isMultiPriceActive" fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE_EVENT.END_DATE' | translate}}</mat-label>
+                        <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                        <input matInput [ngxMatDatetimePicker]="pickerToDate" placeholder="{{'CREATE_EVENT.END_DATE' | translate}}"
+                                formControlName="toDate">
+                                <!-- (dateChange)="dateUpdated()" > -->
+                        <mat-hint>MM/DD/YYYY HH:mm</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="$any(pickerToDate)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #pickerToDate
+                                                [showSpinners]="true" [showSeconds]="false"
+                                                [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                                [touchUi]="false" [enableMeridian]="false"
+                                                [disableMinute]="false" [hideTime]="false">
+                        </ngx-mat-datetime-picker>
+                        <mat-error *ngIf="priceForm.get('toDate')?.hasError('required')">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                        <mat-error *ngIf="priceForm.get('toDate')?.hasError('dateBetween')">{{'ERROR.END_DATE' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="18" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE_EVENT.PRICE' | translate}}</mat-label>
+                        <input  type="number" step=".01" matInput placeholder="{{'CREATE_EVENT.PRICE' | translate}}" formControlName="price" autocomplete="off">
+                        <mat-error *ngIf="priceForm.get('price')?.errors">{{'ERROR.PRICE_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="18" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE_EVENT.CURRENCY' | translate}}</mat-label>
+                        <mat-select placeholder="{{'CREATE_EVENT.CURRENCY' | translate}}" formControlName="currency">
+                          <mat-option *ngFor="let currency of currencyTypes" [value]="currency" [id]="currency">
+                              {{currency}}
+                          </mat-option>
+                      </mat-select>
+
+                        <mat-error *ngIf="priceForm.get('currency')?.errors">{{'ERROR.CURRENCY_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>{{'CREATE_EVENT.DESCRIPTION' | translate}}</mat-label>
+                          <textarea matInput placeholder="{{'CREATE_EVENT.DESCRIPTION_PRICE' | translate}}" formControlName="description" rows="2"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </form>
+                </ng-container>
+              </ng-container>
+              <div *ngIf="isMultiPriceActive" fxFlex="100" class="mt-3 p-2" fxLayoutAlign="center center">
+                <button (click)="addNewPrice()" mat-raised-button matStepperPrevious fxLayout="row" fxLayoutAlign="center center" type="button">
+                  <mat-icon>add</mat-icon>
+                  <span class="mx-1 uppercase">{{'CREATE_EVENT.ADD_NEW_PRICE' | translate}}</span>
+              </button>
+              </div>
+              <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+                <button mat-raised-button color="primary" matStepperPrevious fxLayout="row" fxLayoutAlign="center center" type="button">
+                    <mat-icon>navigate_before</mat-icon>
+                    <span class="mx-1 uppercase">Back</span>
+                </button>
+                <button mat-raised-button color="primary" matStepperNext fxLayout="row" fxLayoutAlign="center center" type="button">
+                    <span class="mx-1 uppercase">Submit</span>
+                    <mat-icon>navigate_next</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-step>
+          <!-- <mat-step [stepControl]="submitForm.get('prices')!" label="prices">
+            <div class="step-content">
+
+              <form formGroupName="prices" fxLayout="row wrap">
+                  <div fxFlex="100" class="p-3">
+                    <h1 class="fw-500 text-center">prices</h1>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>{{'CREATE_EVENT.START_DATE' | translate}}</mat-label>
+                      <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                      <input matInput [ngxMatDatetimePicker]="pickerStartTime" placeholder="{{'CREATE_EVENT.START_DATE' | translate}}"
+                              formControlName="startTime">
+                      <mat-hint>MM/DD/YYYY HH:mm</mat-hint>
+                      <mat-datepicker-toggle matSuffix [for]="$any(pickerStartTime)"></mat-datepicker-toggle>
+                      <ngx-mat-datetime-picker #pickerStartTime
+                                              [showSpinners]="true" [showSeconds]="false"
+                                              [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                              [touchUi]="false" [enableMeridian]="false"
+                                              [disableMinute]="false" [hideTime]="false">
+                      </ngx-mat-datetime-picker>
+                      <mat-error *ngIf="submitForm.controls['basic'].get('startTime')?.errors">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>{{'CREATE_EVENT.END_DATE' | translate}}</mat-label>
+                      <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                      <input matInput [ngxMatDatetimePicker]="pickerEndTime" placeholder="{{'CREATE_EVENT.END_DATE' | translate}}"
+                              formControlName="endTime">
+                      <mat-hint>MM/DD/YYYY HH:mm</mat-hint>
+                      <mat-datepicker-toggle matSuffix [for]="$any(pickerEndTime)"></mat-datepicker-toggle>
+                      <ngx-mat-datetime-picker #pickerEndTime
+                                              [showSpinners]="true" [showSeconds]="false"
+                                              [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                              [touchUi]="false" [enableMeridian]="false"
+                                              [disableMinute]="false" [hideTime]="false">
+                      </ngx-mat-datetime-picker>
+                      <mat-error *ngIf="submitForm.controls['basic'].get('endTime')?.hasError('required')">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                      <mat-error *ngIf="submitForm.controls['basic'].get('endTime')?.hasError('dateBetween')">{{'ERROR.END_DATE' | translate}}</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-xs="18" class="px-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label class="sm-text">{{'CREATE_EVENT.MAX_PARTICIPANTS' | translate}}</mat-label>
+                      <input matInput type="number" min="1" placeholder="{{'CREATE_EVENT.PARTICIPANTS' | translate}}" formControlName="maxParticipants" autocomplete="off">
+                      <mat-error *ngIf="submitForm.controls['basic'].get('maxParticipants')?.errors">{{'ERROR.MAX_PARTICIPANTS_REQUIRED' | translate}}</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-xs="18" class="px-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label class="sm-text">{{'CREATE_EVENT.MAX_PARTICIPANTS' | translate}}</mat-label>
+                      <input matInput type="number" min="1" placeholder="{{'CREATE_EVENT.PARTICIPANTS' | translate}}" formControlName="maxParticipants" autocomplete="off">
+                      <mat-error *ngIf="submitForm.controls['basic'].get('maxParticipants')?.errors">{{'ERROR.MAX_PARTICIPANTS_REQUIRED' | translate}}</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" class="px-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE_EVENT.DESCRIPTION' | translate}}</mat-label>
+                        <textarea matInput placeholder="{{'CREATE_EVENT.DESCRIPTION_PRICE' | translate}}" formControlName="description" rows="2"></textarea>
+                    </mat-form-field>
+                  </div>
+
+
+                  <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+                    <button mat-raised-button color="primary" matStepperPrevious fxLayout="row" fxLayoutAlign="center center" type="button">
+                        <mat-icon>navigate_before</mat-icon>
+                        <span class="mx-1 uppercase">Back</span>
+                    </button>
+                    <button mat-raised-button color="primary" matStepperNext fxLayout="row" fxLayoutAlign="center center" type="button">
+                        <span class="mx-1 uppercase">Submit</span>
+                        <mat-icon>navigate_next</mat-icon>
+                    </button>
+                </div>
+              </form>
+            </div>
+          </mat-step> -->
+
+
+
+            <mat-step [stepControl]="submitForm.get('address')!" label="Address">
+              <div class="step-content">
+
+                  <form formGroupName="address" fxLayout="row wrap">
+
+                      <div fxFlex="100" class="p-3">
+                        <h1 class="fw-500 text-center">Address</h1>
+                      </div>
+
+                      <!-- <div fxFlex="100" class="px-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-icon matPrefix class="mr-1 text-muted">location_on</mat-icon>
+                            <mat-label>Location</mat-label>
+
+                            <input matInput placeholder="Enter a location" formControlName="location" autocomplete="off" #addressAutocomplete>
+                            <button *ngIf="submitForm.get('address')['controls'].location.value" mat-button matSuffix mat-icon-button (click)="submitForm.get('address')['controls'].location.setValue(null)" type="button">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                            <mat-error *ngIf="submitForm.get('address')['controls'].location.errors?.required">Location is required</mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div fxFlex="100" class="px-2 mb-4">
+                          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeControl]="true" [fullscreenControl]="true" (mapClick)="onMapClick($event)">
+                              <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (markerClick)="onMarkerClick($event)"></agm-marker>
+                          </agm-map>
+                      </div>
+
+                      <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>City</mat-label>
+                            <mat-select placeholder="Select City..." formControlName="city" (selectionChange)="onSelectCity()" required>
+                              <mat-option *ngFor="let city of cities" [value]="city">
+                                {{city.name}}
+                              </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="submitForm.get('address')['controls'].city.errors?.required">City is required</mat-error>
+                        </mat-form-field>
+                      </div>
+
+                      <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                          <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput placeholder="exp. 98104" autocomplete="off" formControlName="zipCode">
+                          </mat-form-field>
+                      </div>
+
+                      <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Neighborhood</mat-label>
+                          <mat-select placeholder="Select Neighborhood..." formControlName="neighborhood" multiple (selectionChange)="onSelectNeighborhood()">
+                            <mat-option *ngFor="let neighborhood of neighborhoods | filterNeighborhoods: submitForm.get('address')['controls'].city.value?.id" [value]="neighborhood">
+                              {{neighborhood.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                        <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>Street</mat-label>
+                          <mat-select placeholder="Select Street..." formControlName="street" multiple>
+                            <mat-option *ngFor="let street of streets | filterStreets : { neighborhoods: submitForm.get('address')['controls'].neighborhood.value?.id, cityId:submitForm.get('address')['controls'].city.value?.id } " [value]="street">
+                              {{street.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+-->
+                      <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+                        <button mat-raised-button color="primary" matStepperPrevious fxLayout="row" fxLayoutAlign="center center" type="button">
+                          <mat-icon>navigate_before</mat-icon>
+                          <span class="mx-1 uppercase">Back</span>
+                        </button>
+                        <button mat-raised-button color="primary" matStepperNext fxLayout="row" fxLayoutAlign="center center" type="button">
+                          <span class="mx-1 uppercase">Next</span>
+                          <mat-icon>navigate_next</mat-icon>
+                        </button>
+                      </div>
+
+                  </form>
+
+              </div>
+            </mat-step>
+
+            <mat-step [stepControl]="submitForm.get('media')!" label="Media">
+              <div class="step-content">
+
+                  <form formGroupName="media" fxLayout="row wrap">
+
+                      <div fxFlex="100" class="p-3">
+                        <h1 class="fw-500 text-center">Media</h1>
+                      </div>
+
+                      <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+                          <p class="mb-0"><span class="uppercase fw-500">Videos</span><span class="text-muted mx-3">(video link to .mp4)</span></p>
+                          <button type="button" mat-icon-button color="primary" (click)="addVideo()" matTooltip="Add New Video" matTooltipPosition="after">
+                              <mat-icon>add_circle</mat-icon>
+                          </button>
+                      </div>
+                      <div formArrayName="videos" fxFlex="100" fxLayout="row wrap">
+                          <div *ngFor="let item of submitForm.controls['media'].get('videos')?.value; let i = index;" fxFlex="100" class="step-section">
+                              <div fxFlex="4" class="fw-500 text-center pt-3">{{i+1}}.</div>
+                              <div [formGroupName]="i" fxFlex="90" fxLayout="row wrap">
+                                  <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="40" class="px-2">
+                                      <mat-label>Name</mat-label>
+                                      <input matInput placeholder="Video name" formControlName="name" autocomplete="off">
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="60" class="px-2">
+                                      <mat-label>Link</mat-label>
+                                      <input matInput placeholder="Link to video" formControlName="link" autocomplete="off">
+                                  </mat-form-field>
+                              </div>
+                              <div fxFlex="6" class="text-center pt-2">
+                                  <button mat-icon-button color="warn" (click)="deleteVideo(i)" matTooltip="Delete Video">
+                                      <mat-icon>cancel</mat-icon>
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+                          <p class="mb-0 uppercase fw-500">Additional features</p>
+                          <button type="button" mat-icon-button color="primary" (click)="addFeature()" matTooltip="Add New Feature" matTooltipPosition="after">
+                              <mat-icon>add_circle</mat-icon>
+                          </button>
+                      </div>
+                      <div formArrayName="additionalFeatures" fxFlex="100" fxLayout="row wrap">
+                          <div *ngFor="let item of submitForm.controls['media'].get('additionalFeatures')?.value; let i = index;" fxFlex="100" class="step-section">
+                              <div fxFlex="4" class="fw-500 text-center pt-3">{{i+1}}.</div>
+                              <div [formGroupName]="i" fxFlex="90" fxLayout="row wrap">
+                                  <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="40" class="px-2">
+                                      <mat-label>Name</mat-label>
+                                      <input matInput placeholder="Feature name" formControlName="name" autocomplete="off">
+                                  </mat-form-field>
+                                  <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="60" class="px-2">
+                                      <mat-label>Value</mat-label>
+                                      <input matInput placeholder="Feature value" formControlName="value" autocomplete="off">
+                                  </mat-form-field>
+                              </div>
+                              <div fxFlex="6" class="text-center pt-2">
+                                  <button mat-icon-button color="warn" (click)="deleteFeature(i)" matTooltip="Delete Feature">
+                                      <mat-icon>cancel</mat-icon>
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <div fxFlex="100" class="py-3">
+                          <mat-slide-toggle formControlName="featured">Featured</mat-slide-toggle>
+                      </div>
+
+                      <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+                          <button mat-raised-button color="primary" matStepperPrevious fxLayout="row" fxLayoutAlign="center center" type="button">
+                              <mat-icon>navigate_before</mat-icon>
+                              <span class="mx-1 uppercase">Back</span>
+                          </button>
+                          <button mat-raised-button color="primary" matStepperNext fxLayout="row" fxLayoutAlign="center center" type="button">
+                              <span class="mx-1 uppercase">Submit</span>
+                              <mat-icon>navigate_next</mat-icon>
+                          </button>
+                      </div>
+
+
+                  </form>
+
+              </div>
+            </mat-step>
+
+            <mat-step label="Confirmation">
+              <div class="step-content">
+
+                  <div fxLayout="column" fxLayoutAlign="center center" class="pt-5 text-center">
+                    <button mat-fab color="primary"><mat-icon>check</mat-icon></button>
+                    <h2 class="mt-3 uppercase">Congratulation!</h2>
+                    <h2 class="my-3">Your property <span class="primary-color">"{{submitForm.controls['basic'].get('title')?.value}}"</span> has been submitted</h2>
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus dolor ante, ut luctus mi faucibus a. Ut eu tincidunt neque. Proin porttitor id ligula id placerat. Integer nec nulla varius, dapibus libero quis, semper eros. Aliquam erat volutpat. Proin volutpat tellus vel purus interdum euismod.</p>
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="center center" class="pt-3">
+                    <button mat-raised-button color="accent" (click)="reset()" type="button">Return to submit new property</button>
+                  </div>
+
+              </div>
+            </mat-step>
+
+        </mat-horizontal-stepper>
+
+      </mat-card>
+    </div>
+</div>

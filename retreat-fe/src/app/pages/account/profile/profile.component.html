@@ -1,0 +1,236 @@
+<div fxLayout="row wrap">
+    <div *ngIf="infoForm" fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <h2 class="text-muted text-center fw-600 mb-3">{{ 'ACCOUNT.DETAILS' | translate}}</h2>
+          <form [formGroup]="infoForm" (ngSubmit)="onInfoFormSubmit(infoForm.value)">
+
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">group</mat-icon>
+              <mat-label>{{'PROFILE.USER_TYPE' | translate}}</mat-label>
+              <input [disabled]="true" matInput placeholder="{{'PROFILE.SELECT_USER_TYPE' | translate}}" formControlName="role" required>
+              <mat-error *ngIf="infoForm.get('role')?.hasError('required')" disabled="true">{{'ERROR.USER_TYPE_REQUIRED' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+                <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                <mat-label>{{'PROFILE.FIRST_NAME' | translate}}</mat-label>
+                <input matInput placeholder="{{'PROFILE.FIRST_NAME' | translate}}" formControlName="firstName" required>
+                <mat-error *ngIf="infoForm.get('firstName')?.hasError('required')">{{'ERROR.NAME_REQUIRED' | translate}}</mat-error>
+                <mat-error *ngIf="infoForm.get('firstName')?.hasError('minlength')">{{'ERROR.NAME_LENGTH' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+                <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                <mat-label>{{'PROFILE.LAST_NAME' | translate}}</mat-label>
+                <input matInput placeholder="{{'PROFILE.LAST_NAME' | translate}}" formControlName="lastName" required>
+                <mat-error *ngIf="infoForm.get('lastName')?.hasError('required')">{{'ERROR.NAME_REQUIRED' | translate}}</mat-error>
+                <mat-error *ngIf="infoForm.get('lastName')?.hasError('minlength')">{{'ERROR.NAME_LENGTH' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+                <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                <mat-label>{{'PROFILE.EMAIL' | translate}}</mat-label>
+                <input [disabled]="true" matInput placeholder="{{'PROFILE.EMAIL' | translate}}" formControlName="email" required>
+                <mat-error *ngIf="infoForm.get('email')?.hasError('required')">{{'ERROR.EMAIL_REQUIRED' | translate}}</mat-error>
+                <mat-error *ngIf="infoForm.get('email')?.hasError('email') || infoForm.get('email')?.hasError('invalidEmail')">{{'ERROR.EMAIL_INVALID' | translate}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+              <mat-label>{{'PROFILE.DATE_OF_BIRTH' | translate}}</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" placeholder="{{'PROFILE.DATE_OF_BIRTH' | translate}}">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="infoForm.get('dateOfBirth')?.errors">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">group</mat-icon>
+              <mat-label>{{'PROFILE.GENDER' | translate}}</mat-label>
+              <mat-select placeholder="{{'REGISTRATION.SELECT_GENDER_TYPE' | translate}}" formControlName="genderType">
+                  <mat-option *ngFor="let type of genderTypes" [value]="type.id" [id]="type.id">
+                      {{'GENDER_TYPES.'+ type.id | translate}}
+                  </mat-option>
+              </mat-select>
+              <mat-error *ngIf="infoForm.get('genderType')?.hasError('required')">{{'ERROR.GENDER_REQUIRED' | translate}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">phone</mat-icon>
+                <mat-label>{{'PROFILE.PHONE' | translate}}</mat-label>
+                <input matInput placeholder="Phone" formControlName="phone" required onlyNumber autocomplete="off">
+                <mat-error *ngIf="infoForm.get('phone')?.errors">{{'ERROR.PHONE_REQUIRED' | translate}}</mat-error>
+            </mat-form-field>
+            <mat-slide-toggle formControlName="receiveNewsEmails" class="my-2">{{'PROFILE.RECEIVE_NEWSLETTER' | translate}}</mat-slide-toggle>
+
+            <!-- <div class="mb-3"> -->
+                <!-- <input-file placeholder="Image (or link to image)" formControlName="image" fileLimit="1" fileAccept="image/*" [linkEnabled]="true"></input-file> -->
+                TODO ADD Image
+                <!-- <input-file placeholder="Image (or link to image)" formControlName="image" fileLimit="1" fileAccept="image/*"></input-file>
+            </div> -->
+
+            <div class="text-center mt-2">
+                <button mat-raised-button color="primary" type="submit" class="uppercase" [disabled]="!!!infoFormChanges || !!!infoForm.valid">
+                  {{ 'ACCOUNT.UPDATE_DATA' | translate}}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="passwordForm" fxFlex="100" fxFlex.gt-sm="50" class="p-3" ngClass.sm="mt-2" ngClass.xs="mt-2">
+        <h2 class="text-muted text-center fw-600 mb-3">{{ 'ACCOUNT.PASSWORD_CHANGE' | translate}}</h2>
+          <form #passwordFormNgForm="ngForm" [formGroup]="passwordForm" (ngSubmit)="onPasswordFormSubmit(passwordForm.value)">
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+              <mat-label>{{'PROFILE.PASSWORD' | translate}}</mat-label>
+              <input matInput placeholder="{{'PROFILE.PASSWORD' | translate}}" formControlName="currentPassword" type="password" required [type]="hide ? 'password' : 'text'">
+              <mat-error *ngIf="passwordForm.get('currentPassword')?.hasError('required')">{{'ERROR.PASSWORD_REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="passwordForm.get('currentPassword')?.hasError('minlength')">{{'ERROR.PASSWORD_LENGTH' | translate}}</mat-error>
+              <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+              <mat-label>{{'PROFILE.NEW_PASSWORD' | translate}}</mat-label>
+              <input matInput placeholder="{{'PROFILE.PASSWORD' | translate}}" formControlName="newPassword" type="password" required [type]="hide ? 'password' : 'text'">
+              <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('required')">{{'ERROR.PASSWORD_REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="passwordForm.get('newPassword')?.hasError('minlength')">{{'ERROR.PASSWORD_LENGTH' | translate}}</mat-error>
+              <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field  appearance="outline" class="w-100 mt-1">
+              <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+              <mat-label>{{'PROFILE.CONFIRM_PASSWORD' | translate}}</mat-label>
+              <input matInput placeholder="{{'PROFILE.CONFIRM_PASSWORD' | translate}}" formControlName="confirmNewPassword" type="password" required [type]="hide ? 'password' : 'text'">
+              <mat-error *ngIf="passwordForm.get('confirmNewPassword')?.hasError('required')">{{'ERROR.CONFIRM_PASSWORD_REQUIRED' | translate}}</mat-error>
+              <mat-error *ngIf="passwordForm.get('confirmNewPassword')?.hasError('mismatchedPasswords')">{{'ERROR.CONFIRM_PASSWORD_MISSMATCHED' | translate}}</mat-error>
+              <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+            <div class="text-center mt-2">
+                <button mat-raised-button color="primary" type="submit" class="uppercase" [disabled]="!!!passwordFormChanges || !!!passwordForm.valid">
+                  {{ 'ACCOUNT.CHANGE_PASSWORD' | translate}}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div *ngIf="showCompanyData">
+  <mat-divider></mat-divider>
+  <div fxLayout="row wrap">
+    <div *ngIf="professionalForm" fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+      <h2 class="text-muted text-center fw-600 mb-3">{{ 'ACCOUNT.PROFESSIONAL_DATA' | translate}}</h2>
+      <form [formGroup]="professionalForm" (ngSubmit)="onProfessionalFormSubmit(professionalForm.value)">
+        <div class="text-center mt-2">
+          <mat-form-field  appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">person_outline</mat-icon>
+            <mat-label>{{'EMPLOYEE.POSITION' | translate}}</mat-label>
+            <mat-select placeholder="{{'EMPLOYEE.POSITION' | translate}}" formControlName="position" [compareWith]="comparePositionObjects">
+                <mat-option *ngFor="let position of allPositions" [value]="position" [id]="position.id">
+                    {{'POSITION_TYPES.'+ position.id | translate}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="professionalForm.get('position')?.errors">{{'ERROR.POSITION_REQUIRED' | translate}}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">chat</mat-icon>
+            <mat-label>{{'EMPLOYEE.SKILLS' | translate}}</mat-label>
+            <textarea matInput placeholder="{{'EMPLOYEE.SKILLS' | translate}}" formControlName="skillsText" rows="4"></textarea>
+            <mat-error *ngIf="professionalForm.get('skillsText')?.errors">{{'ERROR.POSITION_REQUIRED' | translate}}</mat-error>
+          </mat-form-field>
+          <!-- <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">developer_board</mat-icon>
+            <mat-label>{{'EMPLOYEE.SKILLS' | translate}}</mat-label>
+            <mat-select placeholder="{{'EMPLOYEE.SKILLS' | translate}}" formControlName="employeeSkills" multiple>
+                <mat-option *ngFor="let skill of skillsTypes" [value]="skill">
+                    {{skill}}
+                </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">chat</mat-icon>
+            <mat-label>{{'EMPLOYEE.ADDITIONAL_INFO' | translate}}</mat-label>
+            <textarea matInput placeholder="{{'EMPLOYEE.ADDITIONAL_INFO' | translate}}" formControlName="additionalInformation" rows="7"></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" class="uppercase" [disabled]="!!!professionalFormChanges || !!!professionalForm.valid">
+            {{ 'ACCOUNT.UPDATE_DATA' | translate}}
+          </button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="companyForm" fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+      <h2 class="text-muted text-center fw-600 mb-3">{{ 'ACCOUNT.COMPANY_DETAILS' | translate}}</h2>
+      <form [formGroup]="companyForm" (ngSubmit)="onCompamyFormSubmit(companyForm.value)">
+
+        <mat-form-field  appearance="outline" class="w-100 mt-1">
+          <mat-icon matPrefix class="mr-1 text-muted">work</mat-icon>
+          <mat-label>{{'COMPANY.NAME' | translate}}</mat-label>
+          <input matInput placeholder="{{'COMPANY.NAME' | translate}}" formControlName="name" required>
+          <mat-error *ngIf="companyForm.get('name')?.errors">{{'ERROR.NAME_REQUIRED' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="w-100 mt-1">
+          <mat-icon matPrefix class="mr-1 text-muted">map</mat-icon>
+          <mat-label>{{'COMPANY.ADDRESS' | translate}}</mat-label>
+          <input matInput placeholder="{{'COMPANY.ADDRESS' | translate}}" formControlName="address" required>
+          <mat-error *ngIf="companyForm.get('address')?.errors">{{'ERROR.ADDRESS_REQUIRED' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="w-100 mt-1">
+          <mat-icon matPrefix class="mr-1 text-muted">numbers</mat-icon>
+          <mat-label>{{'COMPANY.COMPANY_NUMBER' | translate}}</mat-label>
+          <input matInput placeholder="{{'COMPANY.COMPANY_NUMBER' | translate}}" formControlName="companyNumber" required>
+          <mat-error *ngIf="companyForm.get('companyNumber')?.errors">{{'ERROR.COMPANY_NUMBER_REQUIRED' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field  appearance="outline" class="w-100 mt-1">
+          <mat-icon matPrefix class="mr-1 text-muted">numbers</mat-icon>
+          <mat-label>{{'COMPANY.VAT_ID' | translate}}</mat-label>
+          <input matInput placeholder="{{'COMPANY.VAT_ID' | translate}}" formControlName="vatId">
+          <mat-error *ngIf="companyForm.get('vatId')?.hasError('pattern')">{{'ERROR.VAT_ID_ERROR' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mt-1">
+          <mat-icon matPrefix class="mr-1 text-muted">phone</mat-icon>
+            <mat-label>{{'PROFILE.PHONE' | translate}}</mat-label>
+            <input matInput placeholder="Phone" formControlName="phone" required onlyNumber autocomplete="off">
+            <mat-error *ngIf="companyForm.get('phone')?.errors">{{'ERROR.PHONE_REQUIRED' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100 mt-1">
+          <mat-icon matPrefix class="mr-1 text-muted">chat</mat-icon>
+          <mat-label>{{'EMPLOYEE.ADDITIONAL_INFO' | translate}}</mat-label>
+          <textarea matInput placeholder="{{'EMPLOYEE.ADDITIONAL_INFO' | translate}}" formControlName="additionalInformation" rows="7"></textarea>
+        </mat-form-field>
+
+
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Organization</mat-label>
+              <input matInput placeholder="organization" formControlName="organization" autocomplete="off">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Facebook</mat-label>
+              <input matInput placeholder="facebook" formControlName="facebook" autocomplete="off">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Twitter</mat-label>
+              <input matInput placeholder="twitter" formControlName="twitter" autocomplete="off">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Linkedin</mat-label>
+              <input matInput placeholder="linkedin" formControlName="linkedin" autocomplete="off">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Instagram</mat-label>
+              <input matInput placeholder="instagram" formControlName="instagram" autocomplete="off">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Website</mat-label>
+              <input matInput placeholder="website" formControlName="website" autocomplete="off">
+          </mat-form-field>
+
+          <div class="text-center mt-2">
+            <button mat-raised-button color="primary" type="submit" class="uppercase" [disabled]="!!!companyFormChanges || !!!companyForm.valid">
+              {{ 'ACCOUNT.UPDATE_DATA' | translate}}
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>

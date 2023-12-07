@@ -1,0 +1,10 @@
+<app-header-video *ngIf="settings.header == 'video'"
+                [backgroundVideo]="'http://themeseason.com/data/videos/video-1.mp4'"
+                [contentOffsetToTop]="true"
+                [title]="'HEAD.TITLE' | translate"
+                [desc]="'HEAD.SUB_TITLE' | translate"
+                [isHomePage]="true"
+                [fullscreen]="true">
+</app-header-video>
+
+<app-our-services></app-our-services>
