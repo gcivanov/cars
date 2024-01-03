@@ -1,0 +1,72 @@
+<footer>
+    <div class="px-3">
+        <div class="theme-container">
+
+            <div *ngIf="false" fxLayout="column" fxLayout.gt-sm="row wrap" fxLayoutAlign="center center" class="content border-lighter py-5">
+                <div fxFlex="100" fxFlex.gt-sm="40" fxLayout="column" fxLayoutAlign="center center">
+                    <h2 class="uppercase">{{ 'FOOTER.SUBSCRIBE_NEWS' | translate }}</h2>
+                    <p class="desc mb-1">{{ 'FOOTER.SUBSCRIBE_STAY_UP_TO_DATE' | translate }}</p>
+                </div>
+                <form [formGroup]="subscribeForm" (ngSubmit)="onSubscribeFormSubmit(subscribeForm.value)" class="custom-form" fxLayout="row" fxFlex="100" fxFlex.gt-sm="42.4" ngClass.sm="mt-2" ngClass.xs="mt-2">
+                    <mat-form-field appearance="outline" floatLabel="always" class="subscribe-input" fxFlex>
+                        <input matInput class="subscribe-input" autocomplete="off" formControlName="email" placeholder="{{ 'YOUR_EMAIL_ADDRESS' | translate }}">
+                    </mat-form-field>
+                    <button mat-flat-button type="submit" class="subscribe-btn" color="primary">{{ 'SUBSCRIVE' | translate}}</button>
+
+                </form>
+            </div>
+
+            <div class="py-5 content border-lighter">
+
+                <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                    <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="45">
+                        <a class="logo" routerLink="/"><app-logo [large]="true"></app-logo></a>
+                        <p class="mt-5 mb-3 desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum perspiciatis cupiditate numquam odio explicabo accusantium deserunt incidunt.</p>
+                        <p *ngIf="false" fxLayout="row" fxLayoutAlign="start center" class="mt-2">
+                            <mat-icon color="primary">location_on</mat-icon>
+                            <span class="mx-2">{{ 'ADDRESS_CONTACT' | translate }}</span>
+                        </p>
+                        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                            <mat-icon color="primary">call</mat-icon>
+                            <span class="mx-2">(+100) 123 456 7890</span>
+                        </p>
+                        <p *ngIf="false" fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                            <mat-icon color="primary">mail_outline</mat-icon>
+                            <span class="mx-2">{{ 'EMAIL_CONTACT' | translate }}</span>
+                        </p>
+                        <app-social-icons [iconSize]="'lg'" fxLayout="row" fxLayoutAlign="start center" class="desc"></app-social-icons>
+                    </div>
+
+                    <div *ngIf="false" fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="45" ngClass.xs="pt-5">
+                        <h2 class="uppercase">{{'FOOTER.FEEDBACK' | translate}}</h2>
+                        <p class="desc">We want your feedback about everything</p>
+                        <form [formGroup]="feedbackForm" (ngSubmit)="onFeedbackFormSubmit(feedbackForm.value)" class="custom-form pt-2">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>{{'PROFILE.EMAIL' | translate}}</mat-label>
+                                <input matInput autocomplete="off" formControlName="email">
+                                <mat-error *ngIf="feedbackForm.get('email')?.hasError('required');">{{'ERROR.EMAIL_REQUIRED' | translate}}</mat-error>
+                                <mat-error *ngIf="feedbackForm.get('email')?.hasError('invalidEmail')">{{'ERROR.EMAIL_INVALID' | translate}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>{{'FOOTER.MESSAGE' | translate}}</mat-label>
+                                <textarea matInput formControlName="message" rows="6"></textarea>
+                                <mat-error *ngIf="feedbackForm.get('message')?.errors">{{'ERROR.MESSAGE_REQUIRED' | translate}}</mat-error>
+                            </mat-form-field>
+                            <div class="w-100 text-center">
+                                <button mat-flat-button color="primary" class="uppercase" type="submit">{{'BTN.SUBMIT' | translate}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="copyright">
+                <p ngClass.xs="m-1">Copyright © 2024 All Rights Reserved</p>
+                <p *ngIf="false">Designed & Developed by <a mat-button href="https://rsoftware.bg/" target="_blank">RSoftware</a></p>
+            </div>
+
+        </div>
+    </div>
+
+</footer>

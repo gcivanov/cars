@@ -1,0 +1,147 @@
+<form [formGroup]="form" class="search-wrapper variant-1">
+
+    <div [fxLayout]="(vertical) ? 'column' : 'row wrap'">
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>{{'CARS.MAKER' | translate}}</mat-label>
+                <mat-select placeholder="{{'CARS.SELECT_MAKER' | translate}}" formControlName="maker">
+                    <mat-option *ngFor="let maker of makers" [value]="maker">
+                        {{maker.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>{{'CARS.MODEL' | translate}}</mat-label>
+                <mat-select placeholder="{{'CARS.SELECT_MODEL' | translate}}" formControlName="model" multiple>
+                    <mat-option *ngFor="let model of models" [value]="model">
+                        {{model.model}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="price">
+
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex="45">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>{{'PRICE_FROM' | translate}}</mat-label>
+                      <input matInput autocomplete="off" formControlName="from" type="number" min="0" onlyNumber step="1000">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="10" class="text-center">
+                    <mat-icon class="text-muted">remove</mat-icon>
+                </div>
+                <div fxFlex="45">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>{{'TO' | translate}}</mat-label>
+                      <input matInput autocomplete="off" formControlName="to" type="number" min="0" onlyNumber step="1000">
+                      <mat-error *ngIf="form?.get('price.to')?.hasError('numberBetween')">{{'ERROR.PRICE_BETWEEN' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+        <div *ngIf="showMore" [fxLayout]="(vertical) ? 'column' : 'row wrap'" class="w-100">
+
+          <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="kilometers">
+
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex="45">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>{{'KILOMETERS_FROM' | translate}}</mat-label>
+                      <input matInput autocomplete="off" formControlName="from" type="number" min="0" step="10000" onlyNumber>
+
+                    </mat-form-field>
+
+                </div>
+                <div fxFlex="10" class="text-center">
+                    <mat-icon class="text-muted">remove</mat-icon>
+                </div>
+                <div fxFlex="45">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>{{'TO' | translate}}</mat-label>
+                      <input matInput autocomplete="off" formControlName="to" type="number" min="0" step="10000" onlyNumber>
+                      <mat-error *ngIf="this.form?.get('kilometers.to')?.hasError('numberBetween')">{{'ERROR.KILOMETERS_BETWEEN' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2" formGroupName="yearBuilt">
+
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex="45">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>{{'YEAR_FROM' | translate}}</mat-label>
+                      <input matInput autocomplete="off" formControlName="from" type="number" onlyNumber maxlength="4" min="1900" max="2099">
+                      <mat-error *ngIf="form?.get('yearBuilt.from')?.errors">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+
+                    </mat-form-field>
+
+                </div>
+                <div fxFlex="10" class="text-center">
+                    <mat-icon class="text-muted">remove</mat-icon>
+                </div>
+                <div fxFlex="45">
+                    <mat-form-field appearance="outline" floatLabel="always">
+                      <mat-label>{{'TO' | translate}}</mat-label>
+                      <input matInput autocomplete="off" formControlName="to" type="number" onlyNumber maxlength="4" min="1900" max="2099">
+                      <mat-error *ngIf="form?.get('yearBuilt.to')?.errors && !this.form?.get('yearBuilt.to')?.hasError('numberBetween')">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                      <mat-error *ngIf="this.form?.get('yearBuilt.to')?.hasError('numberBetween')">{{'ERROR.END_DATE' | translate}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>{{'TRANSMISSION.TITLE' | translate}}</mat-label>
+              <mat-select placeholder="{{'CARS.SELECT_MODEL' | translate}}" formControlName="transmission" multiple>
+                  <mat-option *ngFor="let transmission of additionalSearchOptions?.transmissionTypeList" [value]="transmission">
+                      {{'TRANSMISSION.'+ transmission | translate}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>{{'FUEL.TITLE' | translate}}</mat-label>
+              <mat-select placeholder="{{'CARS.SELECT_MODEL' | translate}}" formControlName="fuel" multiple>
+                  <mat-option *ngFor="let fuel of additionalSearchOptions?.fuelTypeList" [value]="fuel">
+                      {{'FUEL.'+ fuel | translate}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" class="p-2">
+          <mat-form-field appearance="outline" floatLabel="always">
+              <mat-label>{{'DRIVE.TITLE' | translate}}</mat-label>
+              <mat-select placeholder="{{'CARS.SELECT_MODEL' | translate}}" formControlName="drive" multiple>
+                  <mat-option *ngFor="let drive of additionalSearchOptions?.driveTypeList" [value]="drive">
+                      {{'DRIVE.'+ drive | translate}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="p-2">
+      <button mat-raised-button color="warn" class="uppercase mx-1" (click)="reset()">{{ 'BTN.CLEAR' | translate }}</button>
+      <button *ngIf="!vertical" mat-raised-button color="primary" class="uppercase mx-1" (click)="showMore = !showMore">
+          {{( showMore ? 'BTN.HIDE' : 'BTN.ADVANCED_SEARCH' )| translate}}
+        </button>
+      <button [disabled]="!form?.valid" *ngIf="searchOnBtnClick" mat-raised-button color="primary" class="search-btn mx-1" (click)="search()"><mat-icon>search</mat-icon>{{('BTN.SEARCH' | translate)}}</button>
+    </div>
+
+
+</form>

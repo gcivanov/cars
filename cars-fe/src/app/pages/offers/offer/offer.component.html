@@ -1,0 +1,175 @@
+<div class="px-3">
+    <div class="theme-container">
+      <div *ngIf="!!offer && offer.offerStatus != 'OPEN'" style="
+          position: absolute;
+          z-index: 2; cursor: default;
+          opacity: 0.6;width: 100%; max-width: 1265px; height: max-content; text-align: center; user-select: none;">
+          <h1 style="font-size: calc(16vw * .5); width: 100%; height: 100%;"[style.background-color]="'#D8E0DF'">{{'OFFER_STATUS.' + offer.offerStatus | translate}}</h1>
+        </div>
+
+      <mat-sidenav-container class="single-property mt-3">
+            <mat-sidenav-content *ngIf="!!offer" ngClass.gt-sm="distance">
+                <mat-card fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+                    <div>
+                      <span>{{'VALID_UNTIL' | translate}}</span>
+                      <h4 class="m-1 primary-color">{{getEdnDate()}}</h4>
+                      <p *ngIf="!!offer.location" fxLayout="row" fxLayoutAlign.xs="center" class="address mb-0">
+                          <mat-icon class="text-muted">location_on</mat-icon>
+                          <span>{{offer.location}}</span>
+                      </p>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign.xs="center" class="text-center">
+                      <h2 ngClass.xs="text-center">{{offer.model.maker.name}} {{offer.model.model}}</h2>
+                      <h4 ngClass.xs="text-center">{{offer.modelInfo}}</h4>
+
+                      <app-rating app-rating [rating]="offer.ratingOfFive"></app-rating>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutAlign.xs="center center" class="mx-3 text-center">
+                      <div *ngIf="!!offer.priceNow"  matTooltip="{{'BUY_NOW_INFO' | translate}}">
+                        <h4>{{'BUY_NOW' | translate}}&nbsp;</h4>
+                        <h2 class="primary-color">
+                          <span class="price">{{offer.priceNow}} {{'CURRENCY.BGN' | translate}}</span>
+                        </h2>
+                      </div>
+                      <h4 *ngIf="!!offer.priceTo">{{'ESTIMATED_PRICE' | translate}}&nbsp;</h4>
+                      <h2 class="primary-color">
+                        <span class="price">{{offer.price}}</span>
+                        <span> {{'CURRENCY.BGN' | translate}}</span>
+                        <span class="price" *ngIf="!!offer.priceTo"> - {{offer.priceTo}} {{'CURRENCY.BGN' | translate}}</span>
+                      </h2>
+                      <h4 *ngIf="!!offer.startPrice">
+                        <span>{{'INITIAL_PRICE' | translate}} </span>
+                        <span class="price">{{offer.startPrice}}</span>
+                        <span> {{'CURRENCY.BGN' | translate}}</span>
+                      </h4>
+
+                    </div>
+                </mat-card>
+
+                <mat-card class="mt-3">
+                  <div *ngIf="offer.images.length > 1" class="main-carousel mb-3 m-0"> <!-- w-100 h-100 -->
+                    <div class="control-icons">
+                      <div>
+                      <!-- <button mat-button [disabled]="onCompare()" (click)="addToCompare()" matTooltip="Add To Compare">
+                            <mat-icon class="">compare_arrows</mat-icon>
+                      </button> -->
+                    </div>
+                    </div>
+                    <swiper-container appSwiper #swiper class="swiper-container" [config]="swiperConfig" thumbs-swiper=".mySmallSwiper" (slidechange)="slideChange($event)">
+                      <swiper-slide class="swiper-slide" *ngFor="let image of getOrderImages(offer.images)">
+                        <div class="img" [ngStyle]="{background: 'url(' + image.url +') no-repeat top center / contain'}"></div>
+                      </swiper-slide>
+                    </swiper-container>
+                    <!-- thumbnails -->
+                    <swiper-container appSwiper #swiperThumbs [config]="swiperThumbsConfig" class="mySmallSwiper">
+                      <swiper-slide *ngFor="let image of getOrderImages(offer.images)">
+                        <div class="ratio ratio-4x3" role="button" [ngStyle]="{background: 'url(' + image.url +') center / cover'}"></div>
+                      </swiper-slide>
+                    </swiper-container>
+                    <!-- /thumbnails -->
+                  </div>
+                </mat-card>
+
+                <mat-card class="mt-3">
+                  <div fxLayout="row wrap" class="details">
+                    <div fxFlex="100" fxFlex.gt-xs="100" fxLayoutAlign="center center" class="item">
+                      <app-countdown [targetTime]="getEndTimeAsMoment()"></app-countdown>
+                    </div>
+                  </div>
+                </mat-card>
+
+                <mat-card class="mt-3 text-center">
+                    <div fxLayout="row wrap" class="details">
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'YEAR' | translate}}</span>
+                        <span>{{offer.year}}</span>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'MILEAGE' | translate}}</span>
+                        <span>{{offer.kilometers}} {{'KM' | translate}}</span>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'ENGINE' | translate}}</span>
+                        <span>{{'FUEL.' + offer.fuelType | translate}}  {{offer.engineInfo}}</span>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'TRANSMISSION.TITLE' | translate}}</span>
+                        <span>{{'TRANSMISSION.' + offer.transmissionType | translate}}</span>
+                      </div>
+                      <div *ngIf="!!offer.seats" fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'SEATS' | translate}}</span>
+                        <span>{{offer.seats}}</span>
+                      </div>
+                      <div *ngIf="!!offer.colorInfo" fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'COLOR' | translate}}</span><span>{{offer.colorInfo}}</span>
+                      </div>
+                      <div *ngIf="!!offer.startCodeType" fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'START_CODE.TITLE' | translate}}</span>
+                        <span [matTooltip]="'START_CODE.DESC_' + offer.startCodeType | translate">{{'START_CODE.' + offer.startCodeType | translate}}</span>
+                      </div>
+                      <div *ngIf="!!offer.startCodeType" fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'RATE' | translate}}</span>
+                        <span>{{offer.ratingOfFive}} / 5</span>
+                      </div>
+                    </div>
+                </mat-card>
+                <mat-card *ngIf="!!offer.carfaxLink" class="mt-3">
+                  <mat-card-header fxLayoutAlign="center center">
+                    <mat-card-title class="uppercase">{{'HISTORY' | translate}}</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <a class="date mx-2" (click)="goToCarfaxLink(offer, $event)">
+                      <img style="max-width: 90%; padding-right: 4px;" src="assets/icons/carfax.png" >
+                    </a>
+                  </mat-card-content>
+              </mat-card>
+
+              <mat-card *ngIf="!!offer.additionalInfo" class="mt-3">
+                <mat-card-header fxLayoutAlign="center center">
+                    <mat-card-title class="uppercase">{{'DESCRIPTION' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{offer.additionalInfo}}</p>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card *ngIf="!!offer.deliveryInfo" class="mt-3">
+                <mat-card-header fxLayoutAlign="center center">
+                    <mat-card-title class="uppercase">{{'DELIVERY_INFO' | translate}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{offer.deliveryInfo}}</p>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card class="mt-3">
+                <mat-card-content>
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <h4 class="uppercase">{{'FEATURES' | translate}}</h4>
+                          </mat-expansion-panel-header>
+                          <div *ngFor="let category of groupFeauters(offer)">
+                            <mat-card-header fxLayoutAlign="center center">
+                                <mat-card-title class="uppercase">{{category.category}}</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div fxLayout="row wrap">
+                                    <div *ngFor="let feature of category.items" fxFlex="100" fxFlex.gt-xs="33.3">
+                                        <mat-icon class="mat-icon-sm" color="primary">check</mat-icon>
+                                        <span class="mx-2">{{feature.name}}</span>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                          </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-card-content>
+
+              </mat-card>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+
+    </div>
+</div>

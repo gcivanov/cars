@@ -1,0 +1,99 @@
+<mat-card class="property-item p-0" [ngClass]="[viewType + '-item', 'column-'+column]" [class.full-width-page]="fullWidthPage" fxLayout="row wrap">
+
+    <div fxFlex="100" fxShrink="3" [fxFlex.gt-sm]="(viewType=='list') ? 40 : 100" [fxFlex.sm]="(viewType=='list') ? 50 : 100" class="thumbnail-section">
+
+        <div fxLayout="row wrap" class="item-status">
+            <app-countdown-tag [targetTime]="getEndTimeAsMoment()"></app-countdown-tag>
+            <span *ngIf="(!!offer.priceNow || (!offer.priceTo && !!offer.price)) && offer.offerStatus == 'OPEN'" [style.background-color]="'#F44336'">{{'BUY_NOW' | translate}}</span>
+            <span *ngIf="offer.offerStatus == 'RESERVED'" [style.background-color]="'#009688'">{{'OFFER_STATUS.RESERVED' | translate}}</span>
+            <span *ngIf="offer.offerStatus == 'SOLD'" [style.background-color]="'#F44336'">{{'OFFER_STATUS.SOLD' | translate}}</span>
+            <span *ngIf="offer.offerStatus == 'REMOVED'" [style.background-color]="'#F44336'">{{'OFFER_STATUS.REMOVED' | translate}}</span>
+        </div>
+
+        <div *ngIf="offer.images.length == 1" class="mat-card-image w-100 m-0">
+            <img [src]="offer.images[0].url">
+        </div>
+        <div *ngIf="offer.images.length > 1" class="mat-card-image w-100 m-0">
+          <swiper-container appSwiper #swiper class="swiper-container" [config]="swiperConfig" thumbs-swiper=".mySmallSwiper" (slidechange)="slideChange($event)">
+            <swiper-slide class="swiper-slide" *ngFor="let image of getOrderImages(offer.images)">
+              <div class="img" [ngStyle]="{background: 'url(' + image.url +') no-repeat top center / contain'}"></div>
+            </swiper-slide>
+
+          </swiper-container>
+        </div>
+
+
+        <div class="control-icons">
+            <!-- <button mat-button [disabled]="onCompare()" (click)="addToCompare()" matTooltip="Add To Compare">
+                <mat-icon class="mat-icon-sm">compare_arrows</mat-icon>
+            </button> -->
+        </div>
+    </div>
+    <div fxFlex="100" [fxFlex.gt-sm]="(viewType=='list') ? 60 : 100" [fxFlex.sm]="(viewType=='list') ? 50 : 100" class="p-3">
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" class="h-100">
+            <mat-card-content class="mb-0">
+
+                <h1 class="title"><a [routerLink]="['/offers', offer.id]">{{offer.model.maker.name}} {{offer.model.model}} {{offer.modelInfo}}</a></h1>
+
+                <p *ngIf="!!offer.location" fxLayout="row" class="address">
+                    <mat-icon class="text-muted">location_on</mat-icon>
+                    <span>{{offer.location}}</span>
+                </p>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <div>
+
+                    <div *ngIf="!!offer.priceNow" matTooltip="{{'BUY_NOW_INFO' | translate}}">
+                      <h5>{{'BUY_NOW' | translate}}&nbsp;</h5>
+                      <h4 class="primary-color">
+                        <span class="price">{{offer.priceNow}} {{'CURRENCY.BGN' | translate}}</span>
+                      </h4>
+                    </div>
+                    <h5 *ngIf="!!offer.priceTo">{{'ESTIMATED_PRICE' | translate}}&nbsp;</h5>
+                    <h4 class="primary-color">
+                      <span class="price">{{offer.price}} {{'CURRENCY.BGN' | translate}}</span>
+                      <span class="price" *ngIf="!!offer.priceTo"> - {{offer.priceTo}} {{'CURRENCY.BGN' | translate}}</span>
+                    </h4>
+                    <h5 *ngIf="!!offer.startPrice">
+                      <span>{{'INITIAL_PRICE' | translate}} </span>
+                      <span class="price">{{offer.startPrice}} {{'CURRENCY.BGN' | translate}}</span>
+                    </h5>
+                  </div>
+                  <app-rating [rating]="offer.ratingOfFive"></app-rating>
+                </div>
+
+                <div class="features mt-3">
+                  <p><span>{{'YEAR' | translate}}</span><span>{{offer.year}}</span></p>
+                  <p><span>{{'MILEAGE' | translate}}</span><span>{{offer.kilometers}} {{'KM' | translate}}</span></p>
+                  <p><span>{{'ENGINE' | translate}}</span><span>{{'FUEL.' + offer.fuelType | translate}}  {{offer.engineInfo}}</span></p>
+                  <p><span>{{'TRANSMISSION.TITLE' | translate}}</span><span>{{'TRANSMISSION.' + offer.transmissionType | translate}}</span></p>
+                  <p><span>{{'DRIVE.TITLE'| translate}}</span><span>{{'DRIVE.' + offer.driveType | translate}}</span></p>
+                  <p *ngIf="viewType=='list' && fullWidthPage" fxShow="false" fxShow.gt-sm>
+                    <span>{{'SEATS' | translate}}</span><span>{{offer.seats}}</span>
+                  </p>
+                  <p *ngIf="viewType=='list' && fullWidthPage" fxShow="false" fxShow.gt-sm>
+                    <span>{{'COLOR' | translate}}</span><span>{{offer.colorInfo}}</span>
+                  </p>
+                </div>
+            </mat-card-content>
+            <div class="sticky-footer-helper" fxFlex="grow"></div>
+            <mat-card-actions class="m-0 p-0" fxLayoutAlign="space-between center">
+                <p fxLayout="row" class="date mb-0">
+                  <mat-icon class="text-muted">date_range</mat-icon>
+                  <span class="mx-2" matTooltip="{{'VALID_UNTIL'  | translate}}">{{offer.endDate | date:"dd.MM.yyyy" }}</span>
+                </p>
+                <div *ngIf="!!offer.carfaxLink">
+                  <a class="date mx-2" href="{{offer.carfaxLink}}" target="_blank">
+                    <img style="max-width: 90%; padding-right: 4px;" src="assets/icons/carfax.png">
+                  </a>
+                </div>
+                <div>
+                  <a [routerLink]="['/offers', offer.id]" mat-stroked-button color="primary">{{'DETAILS' | translate}}</a>
+                </div>
+            </mat-card-actions>
+
+        </div>
+
+    </div>
+
+</mat-card>

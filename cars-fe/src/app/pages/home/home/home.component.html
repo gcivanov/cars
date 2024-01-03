@@ -1,0 +1,64 @@
+<!-- <app-header-video
+                [backgroundVideo]="'http://themeseason.com/data/videos/video-1.mp4'"
+                [contentOffsetToTop]="true"
+                [title]="'HEAD.TITLE' | translate"
+                [desc]="'HEAD.SUB_TITLE' | translate"
+                [isHomePage]="true"
+                [fullscreen]="true">
+</app-header-video> -->
+
+<app-header-image
+                [backgroundImage]="'assets/images/cars/home.jpg'"
+                [bgImageAnimate]="true"
+                [contentOffsetToTop]="true"
+                [title]="'HEAD.TITLE' | translate"
+                [desc]="'HEAD.SUB_TITLE' | translate"
+                [isHomePage]="true"
+                [fullscreen]="false">
+</app-header-image>
+
+
+<div class="px-3">
+  <div class="theme-container">
+
+      <mat-card class="main-content-header">
+          <app-search
+              [searchOnBtnClick]="true"
+              (onSearchChange)="searchChanged($event)"
+              (onSearchClick)="searchClicked()">
+          </app-search>
+      </mat-card>
+  </div>
+  <div class="theme-container">
+    <div fxLayout="row wrap" class="properties-wrapper">
+      <div fxFlex="100" class="p-2">
+        <app-toolbar [isHomePage]="true"
+                     [maxLength]="offersTotalItems"
+                                (onChangeCount)="changeCount($event)"
+                                (onChangeSorting)="changeSorting($event)"
+                                (onChangeViewType)="changeViewType($event)"></app-toolbar>
+      </div>
+      <div *ngFor="let offer of offers" [fxFlex]="(viewType=='grid') ? viewCol : 100" class="item">
+        <app-item [offer]="offer" [viewType]="viewType"></app-item>
+      </div>
+
+      <div class="m-2" fxFlex="100" fxLayoutAlign="center center" [style.min-height.px]="200">
+        <div *ngIf="!!offersTotalItems && offersTotalItems > 0 && offersTotalItems != offers?.length">
+            <button *ngIf="!loadding" mat-raised-button color="primary" (click)="loadMore()" class="uppercase">{{'LOAD_MORE' | translate}}</button>
+        </div>
+        <mat-chip *ngIf="offersTotalItems == offers?.length && !loadding" selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+            {{offers?.length}} {{'RESULTS' | translate}}
+        </mat-chip>
+      </div>
+
+      <div fxFlex="100" fxLayoutAlign="center center" [style.min-height.px]="200">
+          <mat-spinner *ngIf="!!loadding"></mat-spinner>
+          <mat-chip *ngIf="offers?.length == 0 && !loadding" selected disableRipple="true" class="uppercase ws-nowrap">
+              {{'ERROR.NO_RESULTS_FOUND' | translate}}
+          </mat-chip>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-our-services></app-our-services>

@@ -1,0 +1,20 @@
+.count-down {
+  box-shadow: 2px 6px 9px 2px rgb(0 0 0 / 20%);
+  background-color: #313b3f;
+  color: #d9a74a;
+  border-radius: 6px;
+  font-family: sans-serif;
+  margin: 0;
+  div {
+    min-width: fit-content;
+    text-align: center;
+    > p {
+      margin: 0;
+      font: normal 40px courier, sans-serif;
+    }
+    > span {
+      margin: 0 !important;
+      font: normal 14px sans-serif;
+    }
+  }
+}

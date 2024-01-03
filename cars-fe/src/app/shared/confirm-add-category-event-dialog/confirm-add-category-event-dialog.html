@@ -1,0 +1,29 @@
+<div mat-dialog-title>
+    <div class="text-center">
+      <mat-icon class="mat-icon-xlg" color="primary">warning</mat-icon>
+      <h2>{{'EVENT_CATEGORIES.NEW_REQUEST_TITLE' | translate}}</h2>
+    </div>
+</div>
+
+<div mat-dialog-content class="pt-2">
+  <form [formGroup]="fg">
+    <div fxFlex="100" class="px-2">
+      <mat-form-field appearance="outline" class="w-100">
+          <mat-label>{{'CREATE.NAME' | translate}}</mat-label>
+          <input type="text" minlength="2" matInput placeholder="{{'CREATE.NAME' | translate}}" formControlName="name" required autocomplete="off">
+          <mat-error *ngIf="fg.get('name')?.errors">{{'ERROR.NAME_REQUIRED' | translate}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" class="px-2">
+      <mat-form-field appearance="outline" class="w-100">
+          <mat-label>{{'CREATE.DESCRIPTION' | translate}}</mat-label>
+          <textarea matInput placeholder="{{'CREATE.DESCRIPTION' | translate}}" formControlName="description" rows="5"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions fxLayoutAlign="end center" class="pb-4">
+    <button mat-button (click)="onDismiss()">{{ 'BTN.CANCEL' | translate }}</button>
+    <button mat-raised-button color="primary" type="submit" (click)="onConfirm(fg.value)" [disabled]="!fg.valid">{{ 'BTN.SUBMIT' | translate }}</button>
+</div>

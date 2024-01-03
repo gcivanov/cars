@@ -1,0 +1,86 @@
+<app-search
+  [searchOnBtnClick]="true"
+  (onSearchChange)="searchChanged($event)"
+  (onSearchClick)="searchClicked()">
+</app-search>
+
+<div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" class="w-100">
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell class="p-2" *matHeaderCellDef> ID </th>
+        <td mat-cell class="p-2" *matCellDef="let offer"> {{offer.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="image">
+        <th mat-header-cell class="p-1" *matHeaderCellDef> Image </th>
+        <td mat-cell class="p-1" *matCellDef="let offer"><img [src]="getFirstOfferImage(offer)" [style.width.px]="100" class="d-block"></td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell class="p-1" *matHeaderCellDef> Title </th>
+        <td mat-cell class="p-1" *matCellDef="let offer"><a [routerLink]="['/offers', offer.id ]" class="property-name">{{offer.model.model}} {{offer.model.maker.name}} {{offer.modelInfo}} {{offer.year}}</a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell class="p-1" *matHeaderCellDef> Price </th>
+        <td mat-cell class="p-1" *matCellDef="let offer">
+          <span class="blod">{{offer.currency}} </span>
+          <span class="blod">{{offer.price}}</span>
+          <span class="blod" *ngIf="offer.priceTo">-{{offer.priceTo}}</span>
+          <span *ngIf="offer.startPrice">, Initial: {{offer.startPrice}}</span>
+          <span *ngIf="offer.priceNow">, Buy Now: <span class="blod">{{offer.priceNow}}</span></span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="published">
+        <th mat-header-cell class="p-1" *matHeaderCellDef> Published </th>
+        <td mat-cell class="p-1" *matCellDef="let offer"> {{offer.publishDate | date:"dd MMMM, yyyy HH:mm:ss"}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ends">
+        <th mat-header-cell class="p-1" *matHeaderCellDef> Ends </th>
+        <td mat-cell class="p-1" *matCellDef="let offer"> {{offer.endDate | date:"dd MMMM, yyyy HH:mm:ss"}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="views">
+        <th mat-header-cell *matHeaderCellDef> Views </th>
+        <td mat-cell *matCellDef="let offer"> {{offer.views}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell class="p-1" *matHeaderCellDef> Active </th>
+        <td mat-cell class="p-1" *matCellDef="let offer">
+
+          <mat-form-field appearance="outline" >
+            <mat-select placeholder="status" [value]="offer.offerStatus" (selectionChange)="onUpdateStatusClick($event, offer)">
+              <mat-option *ngFor="let stat of offerStatuses" [value]="stat">
+                  {{'OFFER_STATUS.'+ stat | translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let offer">
+            <mat-slide-toggle [checked]="offer.active" (change)="onActiveClick($event, offer)"></mat-slide-toggle>
+            <a [routerLink]="['/offers/submit', offer.id]"mat-icon-button color="primary" matTooltip="Edit offer">
+                <mat-icon>edit</mat-icon>
+            </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let offer; columns: displayedColumns;">
+      </tr>
+    </table>
+
+    <p *ngIf="dataSource?.data?.length === 0" class="py-5 mb-0 text-center">No data available</p>
+</div>
+<mat-paginator [length]="offersTotalItems"
+        [pageSize] = "offersPageSize"
+        [pageSizeOptions] = "[offersPageSize]"
+        [pageIndex] = "offersCurrentPage"
+        (page)="pageEvents($event)" showFirstLastButtons></mat-paginator>

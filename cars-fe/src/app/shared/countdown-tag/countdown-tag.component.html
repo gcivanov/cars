@@ -1,0 +1,12 @@
+
+<mat-spinner *ngIf="!!loading" style="
+  width: 4px;
+  height: 4px;
+  padding: 6px;"></mat-spinner>
+<div
+  [ngStyle]="{'background-color': (+hours.innerText < 36) ? '#ED4D33' : '#EBDE1A', 'opacity': loading ? 0 : 0.8, 'height': loading ? 0 : 'auto'}"
+  class="count-down">
+  <span #hours></span>:
+  <span #minutes></span>:
+  <span #seconds></span>
+</div>

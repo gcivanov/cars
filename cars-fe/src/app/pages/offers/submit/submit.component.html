@@ -1,0 +1,307 @@
+<div class="p-3">
+    <div *ngIf="!!submitForm" class="theme-container">
+
+      <mat-card ngClass.lt-lg="p-0" [formGroup]="submitForm">
+
+        <mat-horizontal-stepper #horizontalStepper linear="true" class="submit-property" (selectionChange)="onSelectionChange($event)">
+
+          <mat-step [stepControl]="submitForm.get('info')!" label="{{'CREATE.INFO_PAGE' | translate}}">
+
+            <div class="step-content">
+              <div fxLayout="row wrap">
+                <div fxFlex="100" class="p-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{'CREATE.URL' | translate}}</mat-label>
+                    <input matInput placeholder="{{'CREATE.NAME' | translate}}" [formControl]="urlControl" required autocomplete="off">
+                    <mat-error *ngIf="urlControl?.errors">{{'ERROR.URL_REQUIRED' | translate}}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div appearance="outline" class="w-100 mb-5" fxLayout="row" fxLayoutAlign="center center">
+                  <button [disabled]="!!loading" mat-raised-button type="button" fxLayout="row" fxLayoutAlign="center center" (click)="fetch()">
+                    {{'CREATE.FETCH' | translate}}
+                  </button>
+                </div>
+                <div *ngIf="!!loading" class="w-100 mb-1" fxLayout="row" fxLayoutAlign="center center">
+                  <mat-spinner></mat-spinner>
+                </div>
+              </div>
+              <form formGroupName="info" fxLayout="row wrap">
+
+                <mat-sidenav-container class="single-property">
+                  <mat-sidenav-content *ngIf="!!offer" ngClass.gt-sm="distance">
+
+                    <input class="font-size-24" matInput formControlName="makerName" required autocomplete="off">
+                    <input class="font-size-24" matInput formControlName="modelName" required autocomplete="off">
+                    <input class="font-size-24" placeholder="{{'INFO' | translate}}" matInput formControlName="modelInfo" required autocomplete="off">
+
+
+                    <p *ngIf="!!offer.location" fxLayout="row" fxLayoutAlign.xs="center" class="address mb-0">
+                        <mat-icon class="text-muted">location_on</mat-icon>
+                        <input matInput formControlName="location" required autocomplete="off">
+                    </p>
+
+                    <mat-card fxLayout="row wrap" class="details mt-3">
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'YEAR' | translate}}</span>
+                        <div>
+                          <input matInput placeholder="{{'YEAR' | translate}}" formControlName="year" required type="number" autocomplete="off">
+                          <mat-error *ngIf="submitForm.controls['info'].get('year')?.errors">{{'ERROR.REQUIRED' | translate}}</mat-error>
+                        </div>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'MILEAGE' | translate}}</span>
+                        <div>
+                          <input matInput placeholder="{{'MILEAGE' | translate}}" formControlName="kilometers" required type="number" autocomplete="off">
+                          <span>{{'KM' | translate}}</span>
+                          <mat-error *ngIf="submitForm.controls['info'].get('kilometers')?.errors">{{'ERROR.REQUIRED' | translate}}</mat-error>
+                        </div>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'ENGINE' | translate}}</span>
+                        <div>
+                          <mat-select placeholder="{{'CARS.SELECT_MODEL' | translate}}" formControlName="fuelType" class="w-fit-content">
+                            <mat-option *ngFor="let fuel of additionalSearchOptions?.fuelTypeList" [value]="fuel">
+                                {{'FUEL.'+ fuel | translate}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="submitForm.controls['info'].get('fuelType')?.errors">{{'ERROR.TYPE_REQUIRED' | translate}}</mat-error>
+
+                          <input matInput placeholder="{{'INFO' | translate}}" formControlName="engineInfo" autocomplete="off">
+                        </div>
+                      </div>
+                      <div fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'TRANSMISSION.TITLE' | translate}}</span>
+                        <div>
+                          <mat-select placeholder="{{'CARS.SELECT_MODEL' | translate}}" formControlName="transmissionType" class="w-fit-content">
+                              <mat-option *ngFor="let transmission of additionalSearchOptions?.transmissionTypeList" [value]="transmission">
+                                  {{'TRANSMISSION.'+ transmission | translate}}
+                              </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="submitForm.controls['info'].get('transmissionType')?.errors">{{'ERROR.TYPE_REQUIRED' | translate}}</mat-error>
+                        </div>
+                      </div>
+                      <div *ngIf="!!offer.seats" fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'SEATS' | translate}}</span>
+                        <div>
+                          <input matInput placeholder="{{'INFO' | translate}}" formControlName="seats" autocomplete="off" type="number">
+                        </div>
+                      </div>
+                      <div *ngIf="!!offer.colorInfo" fxFlex="100" fxFlex.gt-xs="50" fxLayout="row" class="item">
+                        <span>{{'COLOR' | translate}}</span>
+                        <div>
+                          <input matInput placeholder="{{'INFO' | translate}}" formControlName="colorInfo" autocomplete="off">
+                        </div>
+                      </div>
+                    </mat-card>
+
+                    <mat-card class="mt-3">
+                      <mat-card-header fxLayoutAlign="center center">
+                        <mat-card-title class="uppercase">{{'HISTORY' | translate}}</mat-card-title>
+                      </mat-card-header>
+                      <mat-card-content >
+                        <div>
+                          <input class="w-90" matInput placeholder="{{'INFO' | translate}}" formControlName="carfaxLink" autocomplete="off">
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+
+
+                    <mat-card class="mt-3">
+                      <mat-card-header fxLayoutAlign="center center">
+                      </mat-card-header>
+                      <mat-card-content>
+                          <div fxLayout="row wrap">
+                              <div *ngFor="let feature of offer?.features" fxFlex="100" fxFlex.gt-xs="33.3">
+                                  <mat-icon class="mat-icon-sm" color="primary">check</mat-icon>
+                                  <span class="mx-2">{{feature.name}} /{{feature.featureCategory.name}}/</span>
+                              </div>
+                          </div>
+                      </mat-card-content>
+                    </mat-card>
+
+                  </mat-sidenav-content>
+                </mat-sidenav-container>
+
+                <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="end center">
+                  <button mat-raised-button color="primary" matStepperNext fxLayout="row" fxLayoutAlign="center center" type="button">
+                    <span class="mx-1 uppercase">Next</span>
+                    <mat-icon>navigate_next</mat-icon>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </mat-step>
+
+
+          <mat-step [stepControl]="submitForm.get('additional')!" label="{{'CREATE.ADDITIONA_INFO' | translate}}">
+            <div class="step-content">
+
+                <form *ngIf="!!offer" formGroupName="additional" fxLayout="row wrap">
+
+                    <div fxFlex="100" class="p-3">
+                      <h1 class="fw-500 text-center">{{'CREATE.INFO_PAGE' | translate}}</h1>
+                    </div>
+
+                    <!-- price -->
+                    <div fxFlex="100" fxFlex.gt-xs="16" class="px-2">
+                        <mat-form-field appearance="outline" floatLabel="always" class="w-100">
+                          <mat-label *ngIf="!selectedBuyNowElement.checked; else buyIt">{{'PRICE_FROM' | translate}}</mat-label>
+                          <ng-template #buyIt>
+                            <mat-label>{{'PRICE' | translate}}</mat-label>
+                          </ng-template>
+                          <input matInput autocomplete="off" formControlName="price" type="number" min="0" onlyNumber step="1000">
+                          <mat-error *ngIf="submitForm.controls['additional'].get('price')?.hasError('required')">{{'ERROR.PRICE_REQUIRED' | translate}}</mat-error>
+                          <mat-error *ngIf="submitForm.controls['additional'].get('price')?.hasError('numberBetween')">{{'ERROR.PRICE_BETWEEN' | translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="2.5" class="px-2 text-center">
+                        <mat-icon class="text-muted  w-100">remove</mat-icon>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="16" class="px-2">
+                        <mat-form-field appearance="outline" floatLabel="always" class="w-100">
+                          <mat-label>{{'TO' | translate}}</mat-label>
+                          <input #priceToElement matInput autocomplete="off" formControlName="priceTo" type="number" min="0" onlyNumber step="1000">
+                          <mat-error *ngIf="submitForm.controls['additional'].get('priceTo')?.hasError('required')">{{'ERROR.PRICE_REQUIRED' | translate}}</mat-error>
+                          <mat-error *ngIf="submitForm.controls['additional'].get('priceTo')?.hasError('numberBetween')">{{'ERROR.PRICE_BETWEEN' | translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="16" class="px-2">
+                      <mat-form-field appearance="outline" floatLabel="always" class="w-100">
+                        <mat-label>{{'PRICE_BASE' | translate}}</mat-label>
+                        <input #priceToElement matInput autocomplete="off" formControlName="startPrice" type="number" min="0" onlyNumber step="1000">
+                        <mat-error *ngIf="submitForm.controls['additional'].get('startPrice')?.hasError('required')">{{'ERROR.PRICE_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="16" class="px-2">
+                      <mat-form-field appearance="outline" floatLabel="always" class="w-100">
+                        <mat-label>{{'BUY_NOW' | translate}}</mat-label>
+                        <input #priceToElement matInput autocomplete="off" formControlName="priceNow" type="number" min="0" onlyNumber step="1000">
+                        <mat-error *ngIf="submitForm.controls['additional'].get('priceNow')?.hasError('numberBetween')">{{'ERROR.PRICE_BETWEEN' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="16" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label class="sm-text">{{'CURRENCY.TITLE' | translate}}</mat-label>
+                        <input matInput placeholder="{{'CURRENCY.TITLE' | translate}}" formControlName="currency" value="{{'CURRENCY.' + submitForm.controls['additional'].get('currency')?.value | translate}}" autocomplete="off">
+                        <mat-error *ngIf="submitForm.controls['additional'].get('currency')?.errors">{{'ERROR.CURRENCY_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="15">
+                      <mat-checkbox #selectedBuyNowElement (change)="valueChangeBuyNowCheckbox($event)">{{'BUY_NOW_ONLY' | translate}}</mat-checkbox>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field  appearance="outline" class="w-100">
+                        <mat-label>{{'START_CODE.TITLE' | translate}}</mat-label>
+                        <mat-select placeholder="{{'START_CODE.TITLE' | translate}}" formControlName="startCodeType" >
+                            <mat-option *ngFor="let startCode of additionalSearchOptions?.startCodeTypeList" [value]="startCode" [id]="startCode">
+                              {{'START_CODE.' + startCode | translate}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="submitForm.controls['additional'].get('startCodeType')?.errors">{{'ERROR.REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="20" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'RATE' | translate}}</mat-label>
+                        <input #rateInputElement matInput placeholder="{{'RATE' | translate}}" formControlName="ratingOfFive" autocomplete="off" type="number" min="0" max="5" step="0.1">
+                        <mat-error *ngIf="submitForm.controls['additional'].get('ratingOfFive')?.errors">{{'ERROR.REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="30" class="px-2">
+                      <app-rating [rating]="+rateInputElement.value || 0.0"></app-rating>
+                    </div>
+
+                    <div fxFlex="100" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>{{'DESCRIPTION' | translate}}</mat-label>
+                          <textarea matInput placeholder="{{'DESCRIPTION' | translate}}" formControlName="additionalInfo" rows="4"></textarea>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                          <mat-label>{{'DELIVERY_INFO' | translate}}</mat-label>
+                          <textarea matInput placeholder="{{'DELIVERY_INFO' | translate}}" formControlName="deliveryInfo" rows="2"></textarea>
+                          <mat-error *ngIf="submitForm.controls['additional'].get('deliveryInfo')?.errors">{{'ERROR.REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE.PUBLISH_TIME' | translate}}</mat-label>
+                        <mat-label>{{submitForm.controls['additional'].get('publishDate')?.value}}</mat-label>
+                        <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                        <input matInput [ngxMatDatetimePicker]="pickerPublishDate" placeholder="{{'CREATE.PUBLISH_TIME' | translate}}"
+                                formControlName="publishDate">
+                        <mat-hint>MM/DD/YYYY HH:mm:ss</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="$any(pickerPublishDate)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #pickerPublishDate
+                                                [showSpinners]="true" [showSeconds]="false"
+                                                [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                                [touchUi]="false" [enableMeridian]="false"
+                                                [disableMinute]="false" [hideTime]="false">
+                        </ngx-mat-datetime-picker>
+                        <mat-error *ngIf="submitForm.controls['additional'].get('publishDate')?.errors">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100" fxFlex.gt-xs="50" class="px-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>{{'CREATE.END_TIME' | translate}}</mat-label>
+                        <mat-icon matPrefix class="mr-1 text-muted">calendar_month</mat-icon>
+                        <input matInput [ngxMatDatetimePicker]="pickerEndDate" placeholder="{{'CREATE.END_TIME' | translate}}"
+                                formControlName="endDate">
+                        <mat-hint>MM/DD/YYYY HH:mm:ss</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="$any(pickerEndDate)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #pickerEndDate
+                                                [showSpinners]="true" [showSeconds]="true"
+                                                [stepHour]="1" [stepMinute]="1" [stepSecond]="1"
+                                                [touchUi]="false" [enableMeridian]="false"
+                                                [disableMinute]="false" [disableSeconds]="false" [hideTime]="false">
+                        </ngx-mat-datetime-picker>
+                        <mat-error *ngIf="submitForm.controls['additional'].get('endDate')?.hasError('required')">{{'ERROR.DATE_REQUIRED' | translate}}</mat-error>
+                        <mat-error *ngIf="submitForm.controls['additional'].get('endDate')?.hasError('dateBetween')">{{'ERROR.END_DATE' | translate}}</mat-error>
+                      </mat-form-field>
+                    </div>
+                    //zone is UTC+02:00      Sofia-bulgaria
+                    <div fxFlex="100" class="mt-3 p-2" fxLayoutAlign="space-between center">
+                      <button mat-raised-button color="primary" matStepperPrevious fxLayout="row" fxLayoutAlign="center center" type="button">
+                          <mat-icon>navigate_before</mat-icon>
+                          <span class="mx-1 uppercase">Back</span>
+                      </button>
+                      <button (click)="updateOffer()" mat-raised-button color="primary" matStepperNext fxLayout="row" fxLayoutAlign="center center" type="button">
+                          <span class="mx-1 uppercase">Submit</span>
+                          <mat-icon>navigate_next</mat-icon>
+                      </button>
+                    </div>
+                </form>
+
+            </div>
+          </mat-step>
+
+
+          <mat-step label="Confirmation">
+            <div class="step-content">
+
+                <div *ngIf="!!offer">
+                  <app-offer [offer]="offer"></app-offer>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center" class="pt-5 text-center">
+                  <button (click)="activate()" mat-fab color="primary"><mat-icon>check</mat-icon></button>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center" class="pt-3">
+                  <button (click)="activate()" mat-raised-button color="accent" type="button">{{'ACTIVATE' | translate}}</button>
+                </div>
+
+            </div>
+          </mat-step>
+
+        </mat-horizontal-stepper>
+
+      </mat-card>
+    </div>
+</div>

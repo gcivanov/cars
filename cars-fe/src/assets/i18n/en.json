@@ -1,0 +1,377 @@
+{
+  "ADDRESS_CONTACT": "2903 Avenue Z, Brooklyn, NY, BULGARIA",
+  "EMAIL_CONTACT": "test@test@email",
+  "LOGOUT": "Logout",
+  "REGISTER": "Register",
+  "SUBMIT_OFFER": "Submit offer",
+  "MENU": "Menu",
+  "MY_OFFERS": "My Offers",
+  "FAVORITES": "Favorites",
+  "COMPARE": "Compare",
+  "EDIT_PROFILE": "Edit Profile",
+  "HELP": "Help",
+  "NAV": {
+    "HOME": "Home",
+    "PROPERTIES": "Properties",
+    "PAGES": "Pages",
+    "AGENTS": "Agents",
+    "AGENT": "Agent",
+    "FAQS": "Faqs",
+    "PRICING": "Pricing",
+    "TERMS_CONDITIONS": "Terms & Conditions",
+    "LANDING": "Landing",
+    "404_PAGE": "404 Page",
+    "OTHERS": "Others",
+    "EXTERNAL_LINK": "External Link",
+    "MENU_ITEM": "Menu Item",
+    "CONTACT": "Contact",
+    "ABOUT_US": "About Us",
+    "ADMIN": "Admin"
+  },
+  "BTN": {
+    "ADD": "Add",
+    "SAVE": "Save",
+    "SUBMIT": "Submit",
+    "CANCEL": "Cancel",
+    "UPLOAD": "Upload",
+    "REMOVE": "Remove",
+    "YES": "Yes",
+    "NO": "No",
+    "OK": "OK",
+    "CLEAR": "Clear",
+    "ADVANCED_SEARCH": "More search options",
+    "SEARCH": "Search",
+    "HIDE": "Hide"
+  },
+  "MESSAGE": {
+    "SURE_DELETE": "Are you sure you want to delete?",
+    "FILE_SIZE": "The file size cannot exceed {{param}} kb."
+  },
+  "FIELD": {
+    "NAME": "Name"
+  },
+  "LOAD_MORE": "Load more",
+  "RESULTS": "Results",
+  "FOUND": "found",
+
+  "YOUR_EMAIL_ADDRESS": "Your email address...",
+  "FOOTER": {
+    "SUBSCRIBE_NEWS": "Subscribe our Newsletter",
+    "SUBSCRIBE_STAY_UP_TO_DATE": "Stay up to date with our latest news",
+    "MESSAGE": "Message for us",
+    "FEEDBACK": "Feedback"
+
+  },
+  "SUBSCRIVE": "Subscribe",
+  "DURATION": {
+    "IS": "The duration is ",
+    "MONTHS": "month(s)",
+    "WEEKS": "week(s)",
+    "DAYS": "day(s)",
+    "HOURS": "hour(s)",
+    "MIN": "min."
+  },
+  "ERROR": {
+    "PLEASE_TRY_AGAIN": "Error, please try again",
+    "URL_REQUIRED": "Please enter valid url",
+    "URL_FECH_FAILD": "Error while fetching, please validate the url",
+    "PRICE_BETWEEN": "Price should be bigger than tha initial one",
+    "KILOMETERS_BETWEEN": "The kilometers must be more than the initial ones",
+
+    "MESSAGE_REQUIRED": "Message is required",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Invalid email address",
+    "PASSWORD_WRONG": "Wrong password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_LENGTH": "Password isn't long enough, minimum of 8 characters",
+    "CONFIRM_PASSWORD_REQUIRED": "Confirm Password is required",
+    "CONFIRM_PASSWORD_MISSMATCHED": "Passwords do not match",
+    "USER_TYPE_REQUIRED": "User type is required",
+    "NAME_REQUIRED": "Name is required",
+    "ADDRESS_REQUIRED": "Address is required",
+    "NAME_LENGTH": "Name isn't long enough, minimum of 2 characters",
+    "DATE_REQUIRED": "Enter valid date",
+    "END_DATE": "End Date should be after Start Date",
+    "PHONE_REQUIRED": "Phone is required",
+    "GENDER_REQUIRED": "Gender is required",
+    "POSITION_REQUIRED": "Position is required",
+    "VAT_ID_ERROR": "Please enter valid VAT ID, if you have one",
+    "COMPANY_NUMBER_REQUIRED": "Company number is required",
+    "DESCRIPTION_REQUIRED":"Please enter Description",
+    "TYPE_REQUIRED": "Type is required",
+    "MAX_PARTICIPANTS_REQUIRED": "Enter Max Participants",
+    "PRICE_REQUIRED": "Price is required",
+    "CURRENCY_REQUIRED": "Currency is required",
+    "NO_RESULTS_FOUND": "No Results Found",
+    "REQUIRED": "Required"
+  },
+  "SUCCESS": {
+    "PASSWORD_RESET": "Password was changed",
+    "ACCOUNT_UPDATE": "Your ",
+    "COMPANY_FORM_RESET": "Company for was changed",
+
+    "URL_DATA_FETCH": "Data fetched"
+  },
+  "HEAD": {
+    "TITLE": "Open Lane",
+    "SUB_TITLE": "Здрави коли на дилърски цени от Америка"
+  },
+
+  "OUR_MISSION": {
+    "TITLE": "Нашата мисия",
+    "SUB_TITLE": "Свързване на търсещи и създаващи",
+    "PAR_1": "Нашата мисия е да преодолеем всяко препятатвие между търсещите и създаващите, като предоставим платформа, която улеснява безпроблемните връзки. Ние се стремим да създадем жизнена общност, където търсещите могат лесно да открият и да се свържат със създатели на ритрийти, насърчавайки смислени и трансформиращи преживявания.",
+    "PAR_2": "Даваме възможност на сътрудничеството, насърчавайки съвместен творчески процес. Вярваме в силата на споделената визия и колективния опит. Успяваме да срещнем уникалните нужди и желания на търсещите чрез улесняване на отворената комуникация и чрез изграждане на доверие, разбиране и споделени ценности.",
+    "PAR_3": "Предоставяме платформа на създателите, за да покажат своя опит и предложения, което им позволява да достигнат до по-широка аудитория и да окажат положително въздействие.",
+    "PAR_4": "Подхранваме трайни връзки между търсачи и създатели отвъд самото преживяване на ритрийт. Стремим се чрез RetreatsBulgaria да се поддържа непрекъсната комуникация, работа в мрежа и ангажираност сред общността. Защото вярваме, че ритрийтите не са само индивидуални преживявания, но и колективно учене и растеж."
+  },
+
+  "OUR_SERVICES": {
+    "TITLE": "Какво ви предлагаме",
+    "PAR_1": "В RetreatsBulgaria ще намериte удобен за потребителя интерфейс, който ви позволява безпроблемно да се придвижвате през различни списъци на места за отдих, като филтрирате по местоположение, дата, продължителност и конкретни теми. Независимо дали сте опитен йоги, който търси спокойно планинско бягство, или творческа душа, търсеща артистично убежище край морето, ние ще подберем за вас богат избор от опции, които да отговарят на вашите предпочитания.",
+    "PAR_2": "За да подобрите допълнително вашето изживяване при планиране на ритрийт, RetreatsBulgaria предлага потребителска система за преглед и оценка, която ви позволява да прочетете автентични отзиви от минали участници. Тази функция ви помага да придобиете представа за качеството и ефективността на преживяванията за отдих, преди да направите своята резервация.",
+    "PAR_3": "Ние от RetreatsBulgaria се ангажираме да създадем подкрепяща общност, която насърчава личното израстване, себеоткриването и благополучието. Нашата мисия е да ви свържем с променящи живота убежища, които насърчават вътрешната хармония и ви помагат да отключите пълния си потенциал.",
+    "PAR_4": "Впуснете се в преобразяващо пътешествие днес, като посетите RetreatsBulgaria и започнете търсенето на перфектното място за йога, изкуство, медитация или терапия във вашата страна. Вашият път към уелнес и себеоткриване ви очаква!"
+  },
+
+  "OUR_BELIEFS": {
+    "TITLE": "В какво вярваме",
+    "PAR_1_TITLE": "Доверие и качество",
+    "PAR_1": "Наш приоритет е доверието и поддържаме стандарти за високо качество. Ние внимателно проверяваме заявките за всеки нов ритрийт или организатор на нашата платформа, за да гарантираме, че отговарят на нашите критерии за съвършенство, професионализъм и безопасност. Ние се стремим да предоставим надеждна платформа, където потребителите могат уверено да се включат в обогатяващи изживявания за отдих.",
+    "PAR_2_TITLE": "Лекота и достъпност",
+    "PAR_2":"Ние вярваме, че вариантите за различните ритрийти трябва да бъдат лесно достъпни за всички. Нашата платформа е проектирана да бъде лесна за употреба, интуитивна и приобщаваща, като гарантира, че хората могат да навигират, създават и откриват ритрийт с лекота. Ние се стремим да премахнем бариерите и да направим подобни събития достъпни за широк кръг от хора.",
+    "PAR_3_TITLE": "Връзка и общност",
+    "PAR_3":"Вярваме в трансформиращата сила на човешката връзка и силата на общността. Нашата платформа насърчава чувството за принадлежност, позволявайки на потребителите да се свързват с хора с подобно мислене, да формират значими взаимоотношения и да се подкрепят взаимно в стремежа си към растеж и благополучие. Провокираме сътрудничеството, връзката, споделянето на знания и опит и вдъхновението за положителна промяна.",
+    "PAR_4_TITLE": "Креативност и обмен",
+    "PAR_4":"Ние вярваме в унменията и опита на хората да създават и планират свои собствени ритрийти, чрез които да ни предават от енергията си и да съадават магично поле на доверие, развитие и обмен на знания и опит. Ние предоставяме платформа, която позволява на потребителите да разгърнат своята креативност, да споделят страстите си и да организират уникални събития, които резонират с тяхната визия и цел."
+  },
+
+  "OUR_STORY": {
+    "TITLE": "Нашата история",
+    "SUB_TITLE": "Създадохме платформата, която ни липсваше",
+    "PAR_1": "Самите ние не веднъж сме били в търсене на идеалното предложение за изживяване – някъде там – далеч от всичко, за уикенд или може би малко повече. Подхранвани от дълбоко желание за поредното приключение и бягство от ежедневието, всеки път се налагаше да се впуснем в онлайн пътешествие, претърсвайки множество уебсайтове и социални медийни платформи, безкрайно лутане, за да открием заветното ни.",
+    "PAR_2": "Последва най-естественото! Решихме ние да създадаем тази платформа, от която толова имахме нужда! Първо беше просто идея, след това план и сега вече е факт! RetreatsBulgaria е уебсайт, който служи като полезен ресурс за хора, които търсят трансформиращи изживявания! Нашата платформа е посветена на това да ви помогне да откриете и изследвате широка гама от възможности за ритрийти, съсредоточени около йога, изкуство, медитация и терапия."
+  },
+
+  "LOGIN": {
+    "SIGN_IN_TITLE": "SIGN IN",
+    "SIGN_IN": "Sign to My Account",
+    "OR_USE": "or Sign in with one click",
+    "RESET_PASS": "Reset Password",
+    "EXIST_ACCOUNT": "Already have an account? Sign in!"
+  },
+  "REGISTRATION" : {
+    "REGISTRATION_TITLE": "Register",
+    "SELECT_USER_TYPE": "Select User Type",
+    "SELECT_GENDER_TYPE": "Select Gender Type",
+    "CREATE": "Create an account",
+    "NO_ACCOUNT": "Нямате регистрация? Нпаравете си!"
+  },
+  "PROFILE_TYPES": {
+    "USER": "Participant/User",
+    "DEALER": "Dealer"
+  },
+  "GENDER_TYPES": {
+    "MAN": "MAN",
+    "WOMAN": "WOMAN",
+    "UNDEFINED": "UNDEFINED"
+  },
+  "EVENT_TYPES": {
+    "RETREAT": "Retreat",
+    "EVENT": "Event"
+  },
+  "EVENT_CATEGORIES": {
+    "Astrology": "Astrology",
+    "Energy practices": "Energy practices",
+    "Women`s energy practices": "Women`s energy practices",
+    "Arts and creativity": "Arts and creativity",
+    "Yoga": "Yoga",
+    "Constellations": "Constellations",
+    "Meditations": "Meditations",
+    "Trauma processing": "Trauma processing",
+    "Psychology": "Psychology",
+    "Tantra": "Tantra",
+    "Others": "Others",
+    "NEW_REQUEST_TITLE": "Request for new Event Category"
+  },
+  "PROFILE": {
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "USER_TYPE": "User type",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "RECEIVE_NEWSLETTER": "Receive Newsletters",
+    "DATE_OF_BIRTH": "Date Of Birth",
+    "GENDER": "Gender",
+    "PHONE": "Phone"
+  },
+  "ACCOUNT": {
+    "TITLE": "Account",
+    "DETAILS": "Account details",
+    "PASSWORD_CHANGE": "Password change",
+    "UPDATE_DATA": "Update data",
+    "CHANGE_PASSWORD": "Change password",
+    "PROFESSIONAL_DATA": "Professional data",
+    "COMPANY_DETAILS": "Company details"
+  },
+  "POSITION_TYPES": {
+    "OW": "Owner",
+    "EM": "Employee"
+  },
+  "EMPLOYEE": {
+    "POSITION": "Position",
+    "ADDITIONAL_INFO": "Additional information"
+  },
+  "COMPANY": {
+    "NAME": "Company Name",
+    "COMPANY_NUMBER": "Company Number",
+    "VAT_ID": "Vat Id",
+    "ADDRESS": "Company Address",
+    "DESCRIPTION": "Company Description",
+    "PHONE": "Company Phone",
+    "ADDITIONAL_INFO": "Company Additional information"
+  },
+  "LOCK_SCREEN": {
+    "TITLE": "Lock screen",
+    "SIGN_IN_OPTION": "Or sign in as a different user"
+  },
+  "DESCRIPTION": "Description",
+  "CREATE": {
+    "URL": "url",
+    "FETCH": "Fetch",
+    "INFO_PAGE": "Info",
+    "ADDITIONA_INFO": "Additional information",
+    "PUBLISH_TIME": "Published",
+    "START_TIME": "Start",
+    "START_DATE": "Start Date",
+    "END_TIME": "End",
+    "END_DATE": "End Date",
+
+    "ADD_CATEGORY": "Add Category",
+    "NAME": "Name",
+    "TYPE_EVENT": "Type Event",
+    "TYPE": "Type",
+    "CATEGORY": "Category",
+    "MAX_PARTICIPANTS": "Max Participants",
+    "PARTICIPANTS": "Participants",
+    "PRICES_PAGE": "Prices",
+    "DESCRIPTION_PRICE": "Free text, like 'no hotels included'",
+    "PRICE": "Price",
+    "CURRENCY": "Currency",
+    "ADD_MORE_ONE_PRICE": "Add more than one price, based on time interval",
+    "ADD_NEW_PRICE": "Add new price"
+  },
+  "REPEATABLE_EVENT": {
+    "TITLE": "Repetable Event",
+    "NEXT_SAVED": "It's going to be saved for the next two years",
+    "MONTHLY": "Monthly",
+    "WEEKLY": "Weekly",
+    "EVERY_YEAR": "Every Year",
+    "CUSTOM_INTERVAL": "Certain Dates"
+  },
+
+  "PRICE": "Price",
+  "ESTIMATED_PRICE": "Estimated price",
+  "PRICE_FROM": "Estimated price from",
+  "PRICE_BASE": "Start price",
+  "INITIAL_PRICE": "Initial price",
+  "BUY_NOW": "Buy now",
+  "BUY_NOW_INFO": "Direct purchase without bidding",
+  "BUY_NOW_ONLY": "Buy now only",
+  "YEAR": "Year",
+  "YEAR_FROM": "Year from",
+  "TO": "to",
+  "KILOMETERS": "Kilometers",
+  "KILOMETERS_FROM": "Kilometers from",
+  "MILEAGE": "Mileage",
+  "KM": "km",
+  "ENGINE": "Engine",
+  "VALID_UNTIL": "Valid until",
+  "SEATS": "Seats",
+  "COLOR": "Color",
+  "DETAILS": "Details",
+  "FEATURES": "Features",
+  "HISTORY": "History",
+  "DELIVERY_INFO": "Delivery Info",
+  "ACTIVATE": "Activate",
+  "CARS": {
+    "MAKER": "Maker",
+    "SELECT_MAKER": "Select maker",
+    "MODEL": "Model",
+    "SELECT_MODEL": "Select model"
+  },
+  "TRANSMISSION": {
+    "TITLE": "Transmission",
+    "A": "Automatic",
+    "M": "Manual",
+    "U": "Unknown"
+  },
+  "FUEL": {
+    "TITLE": "Fuel Type",
+    "G": "Gasoline",
+    "D": "Diesel",
+    "H": "Hybrid",
+    "E": "Electric",
+    "PI_H": "Plug-in Hybrid",
+    "FF": "Flexible Fuel",
+    "O": "Other"
+  },
+  "DRIVE": {
+    "TITLE": "Drive Line Type",
+    "A": "All Wheel Drive",
+    "F": "Front Wheel Drive",
+    "R": "Rear Wheel Drive",
+    "U": "Unknown"
+  },
+  "CURRENCY": {
+    "TITLE": "Currency",
+    "BGN": "BGN"
+  },
+  "RATE": "Rate",
+  "START_CODE": {
+    "TITLE": "Status",
+    "RD": "Run & Drive",
+    "SS": "Starts",
+    "SY": "Stationary",
+    "DESC_RD": "Upon arrival at the facility, the vehicle motor started (either with or without a jump) and idled, both the forward and reverse gears engaged, and the steering wheel made one full rotation in each direction. These functions are not guaranteed at pickup, and the vehicle may not be roadworthy.",
+    "DESC_SS": "Indicates that the vehicle motor started (either with or without a jump) and idled when it reached the yard. The vehicle may not start, drive or move forward at time of pickup, and the vehicle may not be roadworthy.",
+    "DESC_SY": "The vehicle will not start, has engine damage, or was not tested upon arrival. The vehicle may not start, drive or move forward at the time of pickup."
+  },
+  "MONTH": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  },
+  "COUNTDOWN": {
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MIN": "Minutes",
+    "SEC": "Seconds"
+  },
+  "SORT_OPT": {
+    "D": "Sort by",
+    "V": "Most popular",
+    "T": "Most Recent Auctions",
+    "N": "Newest",
+    "L": "Price Low to High",
+    "H": "Price High to Low"
+  },
+  "OFFER_STATUS": {
+    "OPEN" : "Open",
+    "RESERVED": "Reserved",
+    "SOLD": "Sold",
+    "REMOVED": "Removed"
+  }
+
+}

@@ -1,0 +1,14 @@
+<mat-drawer-container fxFlexFill>
+  <div fxFlexFill fxLayout="column" fxLayoutAlign="center center" class="p-3 lock-screen">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" fxLayout="row" fxLayoutAlign="center center">
+        <h3 class="name text-muted">{{username}}</h3>
+        <img src="assets/images/profile/profile.jpg" alt="" class="mat-elevation-z4">
+        <input placeholder="Enter password" formControlName="password" required type="password">
+        <button mat-icon-button color="primary" type="submit" class="submit" [disabled]="!form.valid">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+        <a mat-button routerLink="/login" color="primary">{{'LOCK_SCREEN.SIGN_IN_OPTION' | translate}}</a>
+    </form>
+     <p class="time">{{ date | date:"HH:mm:ss" }}</p>
+  </div>
+</mat-drawer-container>
