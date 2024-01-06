@@ -2,17 +2,17 @@ package main.cars.car.controllers;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import main.cars.car.models.Maker;
-import main.cars.car.models.Model;
 import main.cars.car.models.Offer;
 import main.cars.car.models.request.*;
 import main.cars.car.models.response.MakerResponse;
 import main.cars.car.models.response.PagedResponse;
 import main.cars.car.services.CarService;
-import main.cars.car.services.ScrapService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -60,6 +60,17 @@ public class CarController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateViews(@PathVariable @Min(1) Long id) {
         this.service.updateViews(id);
+    }
+
+    @GetMapping("img/{id}/{name}")
+    public ResponseEntity<byte[]> getImg(@PathVariable(name = "id") Long offerId,
+                                         @PathVariable(name = "name") String name) {
+
+        byte[] arr = this.service.getImage(offerId, name).toBytes();
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<byte[]>(arr, headers, HttpStatus.CREATED);
     }
 
 }

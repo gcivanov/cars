@@ -1,5 +1,6 @@
 package main.cars.car.services;
 
+import com.azure.core.util.BinaryData;
 import lombok.RequiredArgsConstructor;
 import main.cars.car.models.*;
 import main.cars.car.models.request.AdditionalSearchOptionsResponse;
@@ -23,6 +24,8 @@ public class CarService {
     private final MakerRepository makerRepository;
     private final ModelRepository modelRepository;
     private final OfferRepository offerRepository;
+
+    private final BlobStorage blobStorage;
 
     public List<Maker> getAllMakers() {
         return this.makerRepository.findAll();
@@ -193,5 +196,9 @@ public class CarService {
             offer.setOfferStatus(status);
             this.offerRepository.save(offer);
         }
+    }
+
+    public BinaryData getImage(Long id, String name) {
+        return this.blobStorage.getImage(id, name);
     }
 }

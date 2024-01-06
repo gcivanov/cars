@@ -23,7 +23,6 @@ public class Image {
     private Long id;
 
     @NotNull
-    @URL
     @Size(max = 600)
     @Column(length = 600, nullable = false)
     private String url;

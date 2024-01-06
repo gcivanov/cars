@@ -1,13 +1,14 @@
 package main.cars.config.exception;
 
 import main.cars.models.responses.exception.ApiErrorResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.management.relation.RoleNotFoundException;
@@ -17,19 +18,23 @@ import java.time.LocalDate;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiExceptionHandler.class);
+
     @ExceptionHandler(Exception.class)
     public ErrorResponse handleGenericException(final Exception ex) {
-        System.out.println("handleGenericException ....");
+        LOGGER.error(String.format(" Exception.class %s %s", ex.getMessage(), ex.getCause()));
         return ErrorResponse.create(ex, HttpStatus.BAD_REQUEST, "faild");
     }
 
     @ExceptionHandler(CarImportException.class)
     public ResponseEntity<ApiErrorResponse> handleCarImportException(CarImportException ex) {
+        LOGGER.error(String.format(" Exception.class %s %s", ex.getMessage(), ex.getCause()));
         return new ResponseEntity<>(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), LocalDate.now()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CarException.class)
     public ResponseEntity<ApiErrorResponse> handleCarException(CarException ex) {
+        LOGGER.error(String.format(" Exception.class %s %s", ex.getMessage(), ex.getCause()));
         return new ResponseEntity<>(new ApiErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), LocalDate.now()), HttpStatus.BAD_REQUEST);
     }
 
