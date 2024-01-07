@@ -9,6 +9,7 @@ import { Offer, PagginationOffers } from 'src/app/services/models/car/offer';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup } from '@angular/forms';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-my-offers',
@@ -32,7 +33,8 @@ export class MyOffersComponent implements OnInit {
 
 
   constructor(public carService: CarsService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private commonService: CommonService) { }
 
   ngOnInit() {
     const requestObj = {
@@ -105,9 +107,12 @@ export class MyOffersComponent implements OnInit {
   }
 
   public getFirstOfferImage(offer: Offer): string {
-    let result = offer.images.filter(el => !el.url.includes("kar-media"))
-                  .sort((a, b) => a.orderNum - b.orderNum);
-    return result[0]?.url;
+    let result = offer.images.sort((a, b) => a.orderNum - b.orderNum);
+
+    if (result.length > 0)
+      return this.commonService.calcCarImgPath(offer.id, result[0].url);
+
+    return "";
   }
 
   private loadOffers() {

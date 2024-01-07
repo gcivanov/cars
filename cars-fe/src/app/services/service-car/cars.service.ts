@@ -2,12 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Employee, Position } from '../models/account-event/employee';
-import { Company } from '../models/account-event/company';
-import { Maker } from '../models/car/maker';
 import { AdditionalSearchOptions } from '../models/car/additional-search-options';
 import { Offer, PagginationOffers } from '../models/car/offer';
-import { Model } from '../models/car/model';
 import { MakerResponse } from '../models/car/responses';
 import { ActivateOfferRequest, SearchPaginationRequest, StatusOfferRequest } from '../models/car/requests';
 
@@ -41,6 +37,10 @@ export class CarsService {
 
   public getAllOffersNonFiltered(searchPagination: SearchPaginationRequest): Observable<PagginationOffers> {
     return this.http.post<PagginationOffers>(`${environment.apiUrl}/car/offers/all`, searchPagination);
+  }
+
+  public getImg(offerId: number, path: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/car/img/${offerId}/${path}`);
   }
 
   //Guarderd requests:

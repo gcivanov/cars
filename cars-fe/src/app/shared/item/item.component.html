@@ -11,12 +11,13 @@
         </div>
 
         <div *ngIf="offer.images.length == 1" class="mat-card-image w-100 m-0">
-            <img [src]="offer.images[0].url">
+            <img [src]="getImg(offer.images[0])">
         </div>
         <div *ngIf="offer.images.length > 1" class="mat-card-image w-100 m-0">
           <swiper-container appSwiper #swiper class="swiper-container" [config]="swiperConfig" thumbs-swiper=".mySmallSwiper" (slidechange)="slideChange($event)">
             <swiper-slide class="swiper-slide" *ngFor="let image of getOrderImages(offer.images)">
-              <div class="img" [ngStyle]="{background: 'url(' + image.url +') no-repeat top center / contain'}"></div>
+              <!-- <div class="img" [ngStyle]="{background: 'url(' + image.url +') no-repeat top center / contain'}"></div> -->
+              <div class="img" [ngStyle]="{background: 'url(' + getImg(image) +') no-repeat top center / contain'}"></div>
             </swiper-slide>
 
           </swiper-container>

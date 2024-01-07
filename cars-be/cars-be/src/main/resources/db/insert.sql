@@ -172,3 +172,6 @@ INSERT INTO `account`
 VALUES (1,1,'2017-12-03','2024-01-03','2024-01-03',0,_binary '\0','admin@aa.aa','Main',
 'Admin','$2a$10$kNo4xTQV0KRNyCvW02gAsuGvOKX1A/oPzk/zyud/vhznHLHtLEVNa','+3590000000',NULL,'MAN');
 insert into admin(fk_account) values (1);
+
+INSERT INTO `account` VALUES (1,'2000-02-06','2024-01-07',NULL,0,_binary '\0',1,'admin@aa.aa','admin','admin','$2a$10$Iml1Ixl6L0OlOGzWF.am8.XBldvv0HSgK8Xdkj03JiBU32IyUqCEu','359000000000',NULL,'MAN');
+

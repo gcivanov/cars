@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, ViewChild, SimpleChange, ElementRef, AfterViewInit } from '@angular/core';
-import { Settings, AppSettings } from '../../app.settings';
 
-import { AppService } from '../../app.service';
 import { Offer } from 'src/app/services/models/car/offer';
 import { Property } from 'src/app/app.models';
 import { SwiperContainer } from 'swiper/element';
@@ -9,6 +7,7 @@ import { SwiperOptions } from 'swiper/types';
 import { Image } from 'src/app/services/models/car/image';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { CommonService } from 'src/app/services/common.service';
 // import { CompareOverviewComponent } from '../compare-overview/compare-overview.component';
 
 @Component({
@@ -32,10 +31,7 @@ export class ItemComponent implements OnInit, AfterViewInit {
   }
   index: number = 0;
 
-  public settings: Settings;
-  constructor(public appSettings:AppSettings,
-              public appService:AppService) {
-    this.settings = this.appSettings.settings;
+  constructor(private commonService: CommonService) {
   }
 
   ngOnInit() {
@@ -80,9 +76,14 @@ export class ItemComponent implements OnInit, AfterViewInit {
   slideChange(swiper: any) {
     this.index = swiper.detail[0].activeIndex;
   }
+
   public getOrderImages(_images: Image[]): Image[] {
-    let resultImages = _images.filter(el => !el.url.includes("kar-media"));
-    return resultImages.sort((first, second) => first.orderNum - second.orderNum);
+    return this.commonService.calcCarImgOrder(_images);
+  }
+
+
+  public getImg(image: Image): String {
+    return this.commonService.calcCarImgPath(this.offer.id, image.url);
   }
 
   public getOfferEndDate(endDate: any) {

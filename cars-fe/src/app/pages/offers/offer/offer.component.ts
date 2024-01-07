@@ -12,6 +12,7 @@ import { Feature } from 'src/app/services/models/car/feature';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { TranslateService } from '@ngx-translate/core';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-offer',
@@ -45,7 +46,8 @@ export class OfferComponent implements OnInit, AfterViewInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private domSanitizer: DomSanitizer,
               private translate: TranslateService,
-              public fb: FormBuilder) {
+              public fb: FormBuilder,
+              private commonService: CommonService) {
   }
 
   ngOnInit() {
@@ -102,8 +104,11 @@ export class OfferComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //get ordered images
   public getOrderImages(_images: Image[]): Image[] {
-    let resultImages = _images.filter(el => !el.url.includes("kar-media"));
-    return resultImages.sort((first, second) => first.orderNum - second.orderNum);
+    return this.commonService.calcCarImgOrder(_images);
+  }
+
+  public getImg(image: Image): String {
+    return this.commonService.calcCarImgPath(this.offer.id, image.url);
   }
 
   //carfax link in expansion panel
