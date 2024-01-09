@@ -153,4 +153,7 @@ public class Offer {
     @JoinColumn(nullable = false, name = "fk_admin")
     private Admin admin;
 
+    @Column(columnDefinition = "VARCHAR(20)")
+    private String vin;
+
 }

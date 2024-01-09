@@ -23,4 +23,5 @@ public class ScrapDataPy {
     private List<String> listFeatures;
     private List<String> listImages;
     private String carfax;
+    private String vin;
 }

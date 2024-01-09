@@ -68,6 +68,7 @@ public class BlobStorage {
 
                 baos.close();
                 is.close();
+                client.exists();
             }
         } catch (IOException ex) {
             LOGGER.error("Saving img failed ", ex);
@@ -95,7 +96,8 @@ public class BlobStorage {
             LOGGER.error("Getting img failed container missing");
             throw new CarException("Getting img failed fail missing");
         }
-
-        return client.downloadContent();
+        BinaryData result = client.downloadContent();
+        client.exists();
+        return result;
     }
 }
