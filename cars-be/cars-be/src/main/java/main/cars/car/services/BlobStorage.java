@@ -51,7 +51,7 @@ public class BlobStorage {
 
         try {
             int num = 4;
-            String format = "jpg";
+            String format = "jpeg";
             for (String imgUrl: fileUrls) {
                 URL url = new URL(imgUrl);
                 BufferedImage image = ImageIO.read(url);

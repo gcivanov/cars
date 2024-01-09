@@ -68,6 +68,7 @@
 
     create table car_offer (
         id bigint not null auto_increment,
+        vin varchar(20),
         active bit not null,
         currency varchar(3) not null,
         kilometers integer not null,
